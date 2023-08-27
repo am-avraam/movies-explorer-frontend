@@ -1,0 +1,59 @@
+.myself{
+    background-color: #202020;
+    padding: 110px 70px 100px 70px;
+}
+
+@media (min-width: 1280px) {
+    .myself {
+        padding-left: 140px;
+        padding-right: 140px;
+    }
+}
+
+.myself__container {
+    padding-top: 66px;
+    display: grid;
+    gap: 270px;
+    grid-template-columns: auto 270px;
+}
+
+.myself__personal {
+    text-align: left;
+    position: relative;
+    padding-bottom: 30px;
+}
+
+.myself__name{
+    font-size: 50px;
+    line-height: 58px;
+    font-weight: 400;
+    letter-spacing: calc(-50px * 0.04);
+    margin: 0;
+}
+.myself__data{
+    font-size: 18px;
+    line-height: 20px;
+    font-weight: 500;
+    margin-top: 18px;
+    margin-bottom: 26px;
+}
+.myself__intro{
+
+}
+
+.myself__photo {
+    width: 100%;
+    height: 327px;
+    object-fit: none;
+    object-position: 37% 40%;
+}
+
+.myself__link {
+    position: absolute;
+    color: inherit;
+    text-decoration: none;
+    bottom: 0;
+    line-height: 17px;
+    font-size: 14px;
+    font-weight: 500;
+}

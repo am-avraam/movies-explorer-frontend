@@ -1,0 +1,12 @@
+.promo {
+    height: 634px;
+    padding: 0 70px;
+    background: rgba(7, 48, 66, 1) url('../../../../images/main_logo.svg') right 70px bottom 60px no-repeat;
+}
+
+@media (min-width: 1280px) {
+    .promo {
+        padding-left: 140px;
+        padding-right: 140px;
+    }
+}
