@@ -1,0 +1,61 @@
+.movies__searchform {
+    position: relative;
+    padding-top: 70px;
+    width: 100%;
+    margin-bottom: 69px;
+}
+
+.movies__input {
+    all: unset;
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    height: 72px;
+    border-radius: 9px;
+    text-align: left;
+    padding-left: 63px;
+    padding-right: 276px;
+    background: #2F2F2F url("../../../images/search.svg") no-repeat left 19px top 21px;
+
+}
+
+.movies__input::placeholder {
+    position: absolute;
+    color: #8B8B8B;
+    font-size: 18px;
+    line-height: 20px;
+    font-weight: 400;
+    text-align: left;
+}
+
+.movies__button {
+    text-decoration: none;
+    border: none;
+    color: white;
+    font-weight: 500;
+    position: absolute;
+    cursor: pointer;
+    top: calc(50% + 34px/2);
+    right: 257px;
+    border-radius: 50px;
+    background-color: #4285F4;
+    font-size: 11px;
+    line-height: 18px;
+    width: 59px;
+    height: 34px;
+}
+
+.movies__button:hover, .movies__button:active {
+    opacity: .9;
+}
+
+.movies__button::after {
+    content: '';
+    position: absolute;
+    background-color: #424242;
+    height: 40px;
+    width: 1px;
+    top: -3px;
+    right: -30px;
+}
+

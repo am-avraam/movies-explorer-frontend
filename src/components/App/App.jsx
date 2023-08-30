@@ -1,11 +1,16 @@
 import './App.css';
-import Main from '../Main/Main.jsx';
+import { UserContext } from '../../contexts/context';
+import AppRouter from '../../router/AppRouter';
 
 function App() {
+  const currentUser = {};
+
   return (
-    <div className="App">
-  <Main/>
-    </div>
+    <UserContext.Provider value={currentUser}>
+      <div className="App">
+        <AppRouter />
+      </div>
+    </UserContext.Provider>
   );
 }
 

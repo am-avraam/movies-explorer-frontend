@@ -1,34 +1,49 @@
 import React from 'react';
 import logo from '../../images/logo.svg';
 import './Header.css';
+import { Link, useLocation } from 'react-router-dom';
 
-function Header() {
+const exceptions = new Set(['/sign-in', '/sign-up', '/404']);
+
+function Header({ landing }) {
+  const { pathname } = useLocation();
+  const isLanding = pathname === '/';
+
+  if (exceptions.has(pathname)) return null;
+
   return (
-    <header className="header">
+    <header className={`header ${isLanding && 'header__landing'}`}>
       <div className="header__wrapper">
-        <img src={logo} alt="" />
+        <Link className="header__home" to="/">
+          <img src={logo} alt="" />
+        </Link>
         <div className="header__links">
-          <a className="header__link" href="http://localhost:3001/">
+          <Link className={`header__link ${pathname === '/movies' && 'header__link_state_active'}`} to="/movies">
             Фильмы
-          </a>
-          <a className="header__link" href="http://localhost:3001/">
+          </Link>
+          <Link
+            className={`header__link ${pathname === '/saved-movies' && 'header__link_state_active'}`}
+            to="/saved-movies"
+          >
             Сохраненные фильмы
-          </a>
+          </Link>
         </div>
       </div>
-      {true ? (
-        <div className="header__wrapper">
-          <button type="button" className="header__button header__button-signup">
+      {false ? (
+        <div className="header__wrapper header__wrapper_side_right">
+          <Link to="sign-up" className="header__button header__button-signup">
             Регистрация
-          </button>
-          <button type="button" className="header__button header__button-signin">
+          </Link>
+          <Link to="sign-in" className="header__button header__button-signin">
             Войти
-          </button>
+          </Link>
         </div>
       ) : (
-        <button type="button" className="header__profile header__profile_location_landing">
+        // <button type="button" className={`header__profile ${isLanding && 'header__profile_location_landing'}`}>
+        <Link to="/profile" className={`header__profile ${isLanding && 'header__profile_location_landing'}`}>
           Аккаунт
-        </button>
+        </Link>
+        // </button>
       )}
     </header>
   );

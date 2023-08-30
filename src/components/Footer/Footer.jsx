@@ -6,10 +6,10 @@ const Footer = () => (
     <div className="footer__container">
       <span className="footer__copyright">&#169; 2020</span>
       <nav className="footer__navigation">
-        <a className="footer__link" href="https://github.com/am-avraam">
+        <a className="footer__link" href="https://practicum.yandex.ru/">
           Яндекс.Практикум
         </a>
-        <a className="footer__link" href="https://practicum.yandex.ru/">
+        <a className="footer__link" href="https://github.com/am-avraam">
           Github
         </a>
       </nav>

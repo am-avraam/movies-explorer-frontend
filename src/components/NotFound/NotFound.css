@@ -1,0 +1,27 @@
+.absent {
+    height: 100vh;
+    box-sizing: border-box;
+    width: 100vh;
+    padding-top: 246px;
+    margin: 0 auto;
+}
+.absent__title {
+    font-size: 140px;
+    line-height: 170px;
+    font-weight: 400;
+    margin: 0;
+}
+.absent__subtitle {
+    margin-top: 5px;
+    margin-bottom: 208px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+}
+.absent__link {
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 17px;
+    color: #4285F4;
+    padding-bottom: 60px;
+}

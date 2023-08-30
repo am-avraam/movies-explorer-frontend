@@ -3,12 +3,12 @@
     padding: 79px 70px 20px 70px;
 }
 
-@media (min-width: 1280px) {
-    .footer {
-        padding-left: 140px;
-        padding-right: 140px;
-    }
-}
+/*@media (min-width: 1280px) {*/
+/*    .footer {*/
+/*        padding-left: 140px;*/
+/*        padding-right: 140px;*/
+/*    }*/
+/*}*/
 
 .footer__affiliation {
     color: #8B8B8B;
@@ -40,6 +40,10 @@
 .footer__link {
     text-decoration: none;
     color: inherit;
+}
+
+.footer__link:hover, .footer__link:active {
+    opacity: .8;
 }
 
 .footer__link:not(:last-of-type) {

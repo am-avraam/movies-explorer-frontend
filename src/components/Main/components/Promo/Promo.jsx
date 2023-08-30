@@ -4,7 +4,7 @@ import Header from '../../../Header/Header';
 const Promo = () => {
   return (
     <div className="promo">
-      <Header />
+      {/*<Header landing />*/}
       <h1 className="main__title">Учебный проект студента факультета Веб-разработки.</h1>
     </div>
   );

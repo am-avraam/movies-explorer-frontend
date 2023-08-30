@@ -1,0 +1,134 @@
+.profile {
+    max-width: 410px;
+    margin: 0 auto;
+    padding-top: 74px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    /*height: 100vh;*/
+}
+
+.profile__title {
+    margin-top: 0;
+    margin-bottom: 123px;
+    font-size: 24px;
+    line-height: 29px;
+    font-weight: 500;
+}
+
+.profile__form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 220px;
+}
+
+.profile__container {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*.profile__form::after {*/
+/*    content: '-';*/
+/*    height: 1px;*/
+/*    background-color: #424242;*/
+/*    background-color: white;*/
+/*    display: inline;*/
+/*    top: 50%;*/
+/*}*/
+
+.profile__input {
+    font-size: 11px;
+    line-height: 14px;
+    text-align: right;
+    display: inline;
+
+
+    text-decoration: none;
+    border: none;
+    background: transparent;
+    /*box-sizing: border-box;*/
+    /*position: relative;*/
+    display: block;
+    outline: none;
+    /*font-size: 14px;*/
+    /*line-height: 17px;*/
+    color: #FFFFFF;
+}
+
+.profile__label {
+    font-size: 11px;
+    line-height: 14px;
+    font-weight: 500;
+    color: #FFFFFF;
+}
+
+.profile__tip {
+    height: 1px;
+    display: block;
+    background-color: #424242;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.profile__edit {
+    background: none;
+    border: none;
+    font-size: 13px;
+    line-height: 16px;
+    color: white;
+    margin-bottom: 16px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.profile__edit:hover, .profile__edit:active {
+    opacity: .8;
+}
+
+.profile__signout {
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 16px;
+    color: #EE3465;
+}
+
+.profile__signout:hover, .profile__signout:active {
+    opacity: .8;
+}
+
+.profile__save {
+    /*all: unset;*/
+    width: 100%;
+    background: #4285F4;
+    border-radius: 2px;
+    height: 45px;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    border: none;
+}
+
+.profile__save:hover, .profile__save:active {
+    opacity: .8;
+}
+
+.profile__save_state_error {
+    color: #C2C2C2;
+    background-color: #F8F8F8;
+    position: relative;
+}
+
+.profile__save_state_error:hover, .profile__save_state_error:active {
+    opacity: 1;
+}
+
+.profile__error {
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: #FF004C;
+    font-size: 11px;
+    line-height: 14px;
+    top: -20px;
+
+}

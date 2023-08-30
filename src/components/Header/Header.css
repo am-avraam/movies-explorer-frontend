@@ -2,20 +2,33 @@
   display: grid;
   grid-template-columns: auto auto;
   justify-content: space-between;
-  padding: 18px 0;
+  padding: 18px 70px;
+}
+
+.header__landing {
+  background-color: #073042;
+}
+
+.header__home:hover, .header__home:active {
+  opacity: .8;
 }
 
 .header__wrapper {
   display: grid;
   grid-template-columns: auto auto;
   gap: 30px;
+  height: 32px;
+}
+
+.header__wrapper_side_right {
+  padding-top: 4px;
 }
 
 .header__button {
-  background: none;
-  border: none;
+  all: unset;
+  cursor: pointer;
   width: 76px;
-  height: 32px;
+  padding-top: 8px;
   font-size: 12px;
   line-height: 16px;
   font-weight: 500;
@@ -29,6 +42,8 @@
   color: rgba(0, 0, 0, 1);
   background-color: rgba(61, 220, 132, 1);
   border-radius: 3px;
+  width: auto;
+  padding: 8px 20px;
 }
 
 .header__links {
@@ -45,11 +60,24 @@
   color: inherit;
 }
 
+.header__link_state_active {
+  font-weight: 500;
+}
+
+.header__link:hover, .header__link:active {
+  opacity: .8;
+}
+
 .header__link:visited, .header__link:focus, .header__link:hover {
   color: inherit;
 }
 
 .header__profile {
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
   position: relative;
   width: 100px;
   height: 32px;
@@ -67,6 +95,10 @@
   color: inherit;
 }
 
+.header__profile:hover, .header__profile:active {
+  opacity: .8;
+}
+
 .header__profile::after {
   content: '';
   position: absolute;
@@ -74,20 +106,24 @@
   top: 3px;
   display: inline-block;
   border-radius: 50px;
-  background: url('../../images/profile_icon.svg') no-repeat 50% 50%;
+  background: #313131 url('../../images/profile_icon.svg') no-repeat 50% 50%;
   background-size: 12px 12px;
   width: 26px;
   height: 26px;
 }
 
-.header__profile_location_landing::before {
-  content: '';
-  position: absolute;
-  display: inline-block;
-  right: 3px;
-  top: 3px;
-  width: 26px;
-  height: 26px;
-  border-radius: 50px;
+/*.header__profile_location_landing::before {*/
+/*  content: '';*/
+/*  position: absolute;*/
+/*  display: inline-block;*/
+/*  right: 3px;*/
+/*  top: 3px;*/
+/*  width: 26px;*/
+/*  height: 26px;*/
+/*  border-radius: 50px;*/
+/*  background-color: #0F4157;*/
+/*}*/
+
+.header__profile.header__profile_location_landing::after {
   background-color: #0F4157;
 }
