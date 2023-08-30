@@ -6,10 +6,12 @@ import Techs from './components/Techs/Techs';
 import AboutMe from './components/AboutMe/AboutMe';
 import Portfolio from './components/Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
 
 function Main() {
   return (
     <>
+      {/*<Header />*/}
       <Promo />
       <AboutProject />
       <Techs />

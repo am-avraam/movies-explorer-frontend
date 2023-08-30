@@ -1,0 +1,28 @@
+.movies {
+    background-color: #202020;
+    padding: 0 70px;
+}
+
+.movies__expand {
+    text-decoration: none;
+    border: none;
+    width: 320px;
+    height: 36px;
+    border-radius: 6px;
+    background-color: #2F2F2F;
+    color: #FFFFFF;
+    font-size: 12px;
+    line-height: 15px;
+    cursor: pointer;
+}
+
+.movies__expand:hover, .movies__expand:active {
+    opacity: .8;
+}
+
+/*@media (min-width: 1280px) {*/
+/*    .movies {*/
+/*        padding-left: 140px;*/
+/*        padding-right: 140px;*/
+/*    }*/
+/*}*/

@@ -3,12 +3,12 @@
     padding: 110px 70px 0 70px;
 }
 
-@media (min-width: 1280px) {
-    .description {
-        padding-left: 140px;
-        padding-right: 140px;
-    }
-}
+/*@media (min-width: 1280px) {*/
+/*    .description {*/
+/*        padding-left: 140px;*/
+/*        padding-right: 140px;*/
+/*    }*/
+/*}*/
 
 .description__title {
 }

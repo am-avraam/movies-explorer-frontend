@@ -1,0 +1,153 @@
+.login {
+    max-width: 396px;
+    margin: 0 auto;
+    padding-top: 70px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+.login.login-register {
+    height: 521px;
+}
+
+.login__home {
+    display: flex;
+}
+
+.login__title {
+    text-align: left;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    margin: 40px 0;
+}
+
+.login__form {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.login__wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.login__label {
+    display: flex;
+    font-size: 10px;
+    line-height: 12px;
+    color: #8B8B8B;
+    margin-bottom: 5px;
+}
+
+.login__tip {
+    font-size: 0;
+}
+
+.login__tip_state_active {
+    color: #EE3465;
+    text-align: initial;
+    font-size: 10px;
+    line-height: 12px;
+    margin-bottom: 6px;
+}
+
+.login__tip_state_active.login__tip::before {
+    margin-bottom: 6px;
+}
+
+.login__tip::before {
+    content: '';
+    height: 1px;
+    background-color: #424242;
+    width: 100%;
+    display: block;
+    margin-bottom: 24px;
+}
+
+.login__input {
+    text-decoration: none;
+    border: none;
+    padding: 0 0 10px 0;
+    background: transparent;
+    /*box-sizing: border-box;*/
+    /*position: relative;*/
+    display: block;
+    outline: none;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+}
+
+.login__input[placeholder] {
+    width: 100%;
+    border: none;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #CCCCCC;
+    border-bottom: 2px solid #CCCCCC;
+}
+
+.login__input_state_error {
+    color: #EE3465;
+}
+
+.login__auth {
+    width: 100%;
+    background: #4285F4;
+    border-radius: 2px;
+    height: 45px;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    border: none;
+}
+
+.login__auth:hover {
+    opacity: 0.85;
+}
+
+.login__container_side-top {
+    margin-bottom: 216px;
+}
+
+.login__container_side_bottom {
+    margin-top: 197px;
+}
+
+.login__link {
+    display: block;
+    /*margin-top: 15px;*/
+    margin-left: 6px;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #4285F4;
+    text-decoration: none;
+}
+
+.login__link:hover {
+    opacity: 0.6;
+}
+
+.login__revision {
+    display: flex;
+    flex-direction: row;
+    margin-top: 16px;
+    justify-content: center;
+    margin-bottom: 70px;
+}
+
+.login__question {
+    font-size: 14px;
+    line-height: 17px;
+    color: #8B8B8B;
+}
