@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import logo from '../../images/logo.svg';
 import './Header.css';
 import { Link, useLocation } from 'react-router-dom';
-import { SideMenu } from '../SideMenu/SideMenuFull';
+import { SideMenu } from 'components/SideMenu/SideMenu';
+
 const exceptions = new Set(['/sign-in', '/sign-up', '/404']);
 
 function Header({ landing }) {

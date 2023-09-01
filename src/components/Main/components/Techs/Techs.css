@@ -16,8 +16,6 @@
     }
 }
 
-
-
 .techs__title {
     font-size: 50px;
     line-height: 58px;
@@ -94,7 +92,6 @@
 .techs__item {
     display: inline-grid;
     justify-content: center;
-    /*height: 60px;*/
     background-color: #303030;
     border-radius: 10px;
     list-style: none;

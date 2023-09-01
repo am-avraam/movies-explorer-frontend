@@ -109,8 +109,6 @@
     border: none;
     padding: 0 0 10px 0;
     background: transparent;
-    /*box-sizing: border-box;*/
-    /*position: relative;*/
     display: block;
     outline: none;
     font-size: 14px;
@@ -156,20 +154,6 @@
     opacity: 0.85;
 }
 
-/*.login__container_side-top {*/
-/*    margin-bottom: 216px;*/
-/*}*/
-
-/*.login__container_side_bottom {*/
-/*    margin-top: 197px;*/
-/*}*/
-
-/*@media (max-width: 1279px) {*/
-/*    .login__container_side_bottom {*/
-/*        margin-top: 134px;*/
-/*    }*/
-/*}*/
-
 .login__link {
     display: block;
     /*margin-top: 15px;*/
@@ -198,7 +182,6 @@
     flex-direction: row;
     margin-top: 16px;
     justify-content: center;
-    /*margin-bottom: 70px;*/
 }
 
 .login__question {

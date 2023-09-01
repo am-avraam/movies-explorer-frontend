@@ -164,18 +164,6 @@
   height: 26px;
 }
 
-/*.header__profile_location_landing::before {*/
-/*  content: '';*/
-/*  position: absolute;*/
-/*  display: inline-block;*/
-/*  right: 3px;*/
-/*  top: 3px;*/
-/*  width: 26px;*/
-/*  height: 26px;*/
-/*  border-radius: 50px;*/
-/*  background-color: #0F4157;*/
-/*}*/
-
 .header__profile.header__profile_location_landing::after {
   background-color: #0F4157;
 }

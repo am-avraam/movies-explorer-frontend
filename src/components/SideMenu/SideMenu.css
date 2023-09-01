@@ -21,18 +21,6 @@
     z-index: 2;
 }
 
-
-/*@media screen and (max-width: 890px) {*/
-/*    .menu {*/
-/*        max-width: 100%;*/
-/*    }*/
-
-/*    .menu::after {*/
-/*        max-width: 100%;*/
-/*        box-sizing: border-box;*/
-/*    }*/
-/*}*/
-
 .menu__close {
     border: none;
     position: absolute;
@@ -69,7 +57,6 @@
     .menu__container {
         padding: 144px 10px 46px;
         width: 100%;
-        /*padding-bottom: 46px;*/
     }
 }
 
@@ -139,7 +126,3 @@
 }
 
 
-/*.menu__profile_state_active::before {*/
-/*    content: '';*/
-/*    border: 1px solid white;*/
-/*}*/
