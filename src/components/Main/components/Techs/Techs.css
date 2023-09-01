@@ -77,6 +77,13 @@
     margin: 0;
 }
 
+@media (max-width: 1279px) {
+    .techs__list {
+        grid-template-columns: repeat(7, 84px);
+        padding: 0;
+    }
+}
+
 @media (max-width: 767px) {
     .techs__list {
         padding: 0 57px;

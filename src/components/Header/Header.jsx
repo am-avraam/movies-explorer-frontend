@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import logo from '../../images/logo.svg';
 import './Header.css';
 import { Link, useLocation } from 'react-router-dom';
-import { EditAvatarPopup } from '../SideMenu/SideMenuFull';
+import { SideMenu } from '../SideMenu/SideMenuFull';
 const exceptions = new Set(['/sign-in', '/sign-up', '/404']);
 
 function Header({ landing }) {
@@ -24,7 +24,7 @@ function Header({ landing }) {
 
   return (
     <>
-      <EditAvatarPopup
+      <SideMenu
         handleEscClose={handleEscClose}
         onUpdateAvatar={() => {}}
         isOpen={isSideMenuOpen}
