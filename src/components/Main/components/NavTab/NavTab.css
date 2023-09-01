@@ -11,3 +11,19 @@
     margin-top: 23px;
     border: .5px solid #DADADA;
 }
+
+
+@media (max-width: 767px) {
+    .navtab {
+        font-size: 18px;
+        line-height: 22px;
+    }
+
+    .navtab::after {
+        margin-top: 28px;
+    }
+
+    .navtab_line_black::after {
+        border-color: #000000;
+    }
+}

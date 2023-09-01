@@ -6,6 +6,22 @@
     flex-direction: column;
     box-sizing: border-box;
     height: 100vh;
+    padding-bottom: 70px;
+    justify-content: space-between;
+}
+
+@media (max-width: 1279px) {
+    .login {
+        padding-top: 232px;
+        padding-bottom: 232px;
+    }
+}
+
+@media (max-width: 767px) {
+    .login {
+        padding: 56px 30px 30px;
+
+    }
 }
 
 .login.login-register {
@@ -16,6 +32,12 @@
     display: flex;
 }
 
+@media (max-width: 767px) {
+    .login__home {
+        justify-content: center;
+    }
+}
+
 .login__title {
     text-align: left;
     font-family: Inter;
@@ -23,6 +45,14 @@
     font-size: 24px;
     line-height: 29px;
     margin: 40px 0;
+}
+
+@media (max-width: 767px) {
+    .login__title {
+        margin-top: 50px;
+        margin-bottom: 80px;
+        text-align: center;
+    }
 }
 
 .login__form {
@@ -59,6 +89,10 @@
 
 .login__tip_state_active.login__tip::before {
     margin-bottom: 6px;
+}
+
+.login__tip_state_active:last-of-type {
+    margin-bottom: 0;
 }
 
 .login__tip::before {
@@ -111,17 +145,30 @@
     border: none;
 }
 
+@media (max-width: 767px) {
+    .login__auth {
+        font-size: 12px;
+        line-height: 15px;
+    }
+}
+
 .login__auth:hover {
     opacity: 0.85;
 }
 
-.login__container_side-top {
-    margin-bottom: 216px;
-}
+/*.login__container_side-top {*/
+/*    margin-bottom: 216px;*/
+/*}*/
 
-.login__container_side_bottom {
-    margin-top: 197px;
-}
+/*.login__container_side_bottom {*/
+/*    margin-top: 197px;*/
+/*}*/
+
+/*@media (max-width: 1279px) {*/
+/*    .login__container_side_bottom {*/
+/*        margin-top: 134px;*/
+/*    }*/
+/*}*/
 
 .login__link {
     display: block;
@@ -134,6 +181,14 @@
     text-decoration: none;
 }
 
+@media (max-width: 767px) {
+    .login__link {
+        font-size: 12px;
+        line-height: 15px;
+        margin-left: 7px;
+    }
+}
+
 .login__link:hover {
     opacity: 0.6;
 }
@@ -143,11 +198,18 @@
     flex-direction: row;
     margin-top: 16px;
     justify-content: center;
-    margin-bottom: 70px;
+    /*margin-bottom: 70px;*/
 }
 
 .login__question {
     font-size: 14px;
     line-height: 17px;
     color: #8B8B8B;
+}
+
+@media (max-width: 767px) {
+    .login__question {
+        font-size: 12px;
+        line-height: 15px;
+    }
 }

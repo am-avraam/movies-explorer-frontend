@@ -29,6 +29,22 @@ export const Register = ({ onLogin }) => {
         </Link>
         <h1 className="login__title">Добро пожаловать!</h1>
         <form className="login__form" id="login-form-auth" onSubmit={handleSubmit}>
+          <label className="login__label" htmlFor="name">
+            Имя
+          </label>
+          <input
+            onChange={handleChange}
+            // value={formValue.name}
+            defaultValue="Виталий"
+            className="login__input"
+            name="name"
+            type="text"
+            required
+            minLength="2"
+            maxLength="40"
+          />
+          <span className={`login__tip ${!error && 'login__tip_state_active'}`}>Что-то пошло не так...</span>
+
           <label className="login__label" htmlFor="email">
             Email
           </label>

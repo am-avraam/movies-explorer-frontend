@@ -3,12 +3,17 @@
     padding: 110px 70px 100px 70px;
 }
 
-/*@media (min-width: 1280px) {*/
-/*    .myself {*/
-/*        padding-left: 140px;*/
-/*        padding-right: 140px;*/
-/*    }*/
-/*}*/
+@media (max-width: 1279px) {
+    .myself {
+        padding: 90px 50px;
+    }
+}
+
+@media (max-width: 767px) {
+    .myself {
+        padding: 70px 14px;
+    }
+}
 
 .myself__container {
     padding-top: 66px;
@@ -17,10 +22,43 @@
     grid-template-columns: auto 270px;
 }
 
+@media (max-width: 1279px) {
+    .myself__container {
+        gap: 49px;
+        grid-template-columns: auto 255px;
+        grid-template-areas: unset;
+        row-gap: unset;
+    }
+}
+
+@media (max-width: 767px) {
+    .myself__container {
+        padding-top: 60px;
+        gap: unset;
+        row-gap: 40px;
+        grid-template-columns: auto;
+        grid-template-rows: auto;
+        grid-template-areas:
+        "photo"
+        "personal"
+    ;
+    }
+}
+
+
 .myself__personal {
     text-align: left;
     position: relative;
     padding-bottom: 30px;
+    grid-area: unset;
+}
+
+@media (max-width: 767px) {
+    .myself__personal {
+        padding-bottom: 17px;
+        grid-area: personal;
+    ;
+    }
 }
 
 .myself__name{
@@ -30,6 +68,21 @@
     letter-spacing: calc(-50px * 0.04);
     margin: 0;
 }
+
+@media (max-width: 1279px) {
+    .myself__name {
+        line-height: 40px;
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 767px) {
+    .myself__name {
+       font-size: 30px;
+        line-height: 36px;
+    }
+}
+
 .myself__data{
     font-size: 18px;
     line-height: 20px;
@@ -37,8 +90,43 @@
     margin-top: 18px;
     margin-bottom: 26px;
 }
-.myself__intro{
 
+@media (max-width: 1279px) {
+    .myself__data {
+        line-height: 12px;
+        font-size: 18px;
+        margin-top: 16px;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 767px) {
+    .myself__data {
+        font-size: 11px;
+        line-height: 16px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
+
+.myself__intro{
+    font-size: 14px;
+    line-height: 22px;
+}
+
+@media (max-width: 1279px) {
+    .myself__intro {
+        font-size: 12px;
+        line-height: 18px;
+    }
+}
+
+@media (max-width: 767px) {
+    .myself__intro {
+        font-size: 11px;
+        line-height: 16px;
+        margin-bottom: 40px;
+    }
 }
 
 .myself__photo {
@@ -46,6 +134,22 @@
     height: 327px;
     object-fit: none;
     object-position: 37% 40%;
+    border-radius: 10px;
+
+}
+
+@media (max-width: 1279px) {
+    .myself__photo {
+        height: 307px;
+        grid-area: unset;
+    }
+}
+
+@media (max-width: 767px) {
+    .myself__photo {
+        height: 352px;
+        grid-area: photo;
+    }
 }
 
 .myself__link {
