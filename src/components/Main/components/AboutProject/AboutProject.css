@@ -15,13 +15,6 @@
     }
 }
 
-/*@media (min-width: 1280px) {*/
-/*    .description {*/
-/*        padding-left: 140px;*/
-/*        padding-right: 140px;*/
-/*    }*/
-/*}*/
-
 .description__title {
 }
 
@@ -102,7 +95,6 @@
 }
 
 .description__period {
-    /*display: block;*/
     font-size: 14px;
     height: 36px;
 }

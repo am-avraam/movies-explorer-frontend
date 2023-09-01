@@ -3,7 +3,6 @@ import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import { ProtectedRouteElement as ProtectedRoute } from './ProtectedRoute';
 import Main from './../components/Main/Main';
 import Movies from './../components/Movies/Movies';
-import SavedMovies from './../components/SavedMovies/SavedMovies';
 import { Login } from './../components/Login/Login';
 import { Register } from './../components/Register/Register';
 import Header from '../components/Header/Header';
@@ -21,22 +20,7 @@ const AppRouter = () => {
         <Route
           path="/"
           element={
-            loggedIn ? (
-              <ProtectedRoute
-                // cards={cards}
-                // onCardDelete={handleCardDelete}
-                // onCardLike={handleCardLike}
-                // onEditProfile={handleEditProfileClick}
-                // onAddPlace={handleAddPlaceClick}
-                // onEditAvatar={handleEditAvatarClick}
-                // onCardClick={handleCardClick}
-                loggedIn={loggedIn}
-                element={Main}
-                // element={Movies}
-              />
-            ) : (
-              <Navigate to="/sign-in" replace />
-            )
+            loggedIn ? <ProtectedRoute loggedIn={loggedIn} element={Main} /> : <Navigate to="/sign-in" replace />
           }
         />
 

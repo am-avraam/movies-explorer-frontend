@@ -30,10 +30,7 @@ const Profile = () => {
             maxLength="40"
           />
         </div>
-        <span
-          className="profile__tip"
-          // className={`login__tip profile__tip ${error && 'login__tip_state_active'}`}
-        ></span>
+        <span className="profile__tip"></span>
         <div className="profile__container">
           <label className=" profile__label" htmlFor="email">
             Email
@@ -50,7 +47,6 @@ const Profile = () => {
             maxLength="40"
           />
         </div>
-        {/*<span className={`login__tip profile__tip ${error && 'login__tip_state_active'}`}>Что-то пошло не так...</span>*/}
       </form>
 
       {editing && (

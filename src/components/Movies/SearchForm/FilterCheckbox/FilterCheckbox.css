@@ -5,7 +5,6 @@
 .movies__container {
     position: absolute;
     top: 27px;
-            /*calc(50% - 26px);*/
     right: 161px;
 }
 
