@@ -9,7 +9,7 @@ const Movies = ({ saved }) => {
     <>
       <div className="movies">
         {/*<Header />*/}
-        <main>
+        <main className="movies__main">
           <SearchForm />
           <MoviesCardList saved={saved} />
           <button className="movies__expand">Еще</button>

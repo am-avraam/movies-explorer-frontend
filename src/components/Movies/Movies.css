@@ -16,13 +16,34 @@
     cursor: pointer;
 }
 
+@media (max-width: 767px) {
+    .movies__expand {
+        max-width: 80%;
+    }
+}
+
 .movies__expand:hover, .movies__expand:active {
     opacity: .8;
 }
 
-/*@media (min-width: 1280px) {*/
-/*    .movies {*/
-/*        padding-left: 140px;*/
-/*        padding-right: 140px;*/
-/*    }*/
-/*}*/
+@media (max-width: 1279px) {
+    .movies {
+        padding: 0 30px;
+    }
+}
+
+@media (max-width: 767px) {
+    .movies {
+        padding: 0 10px;
+    }
+}
+
+.movies__main {
+    padding-top: 70px;
+}
+
+@media (max-width: 1279px) {
+    .movies__main {
+        padding: 80px 0;
+    }
+}

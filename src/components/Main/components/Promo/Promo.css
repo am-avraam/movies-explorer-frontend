@@ -1,7 +1,49 @@
 .promo {
-    height: 634px;
+    height: 560px;
+    box-sizing: border-box;
     padding: 50px 70px 0 70px;
     background: rgba(7, 48, 66, 1) url('../../../../images/main_logo.svg') right 70px bottom 60px no-repeat;
+}
+
+@media (max-width: 1279px) {
+    .promo {
+        padding-top: 300px;
+        height: 844px;
+        background-position: center bottom 70px;
+        background-size: 680px 230px;
+    }
+}
+
+@media (max-width: 767px) {
+    .promo {
+        padding: 183px 10px 0;
+        height: 630px;
+        background-position: center bottom 40px;
+    }
+}
+
+.promo__title {
+    max-width: 626px;
+    font-weight: 400;
+    line-height: 52px;
+    font-size: 40px;
+    margin-top: 0px;
+    text-align: left;
+    letter-spacing: calc(-40px * 0.04);
+}
+
+@media (max-width: 1279px) {
+    .promo__title {
+        text-align: center;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 767px) {
+    .promo__title {
+        font-size: 31px;
+        line-height: 39px;
+    }
 }
 
 /*@media (min-width: 1280px) {*/

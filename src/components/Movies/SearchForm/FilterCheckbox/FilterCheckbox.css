@@ -4,9 +4,24 @@
 
 .movies__container {
     position: absolute;
-    top: calc(50% + 26px);
+    top: 27px;
+            /*calc(50% - 26px);*/
     right: 161px;
 }
+
+@media (max-width: 1279px) {
+    .movies__container {
+        right: 152px;
+    }
+}
+
+@media (max-width: 767px) {
+    .movies__container {
+        top: 118px;
+        right: calc(50% + 52px);
+    }
+}
+
 .movies__switch {
     position: relative;
     width: 36px;

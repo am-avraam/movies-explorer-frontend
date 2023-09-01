@@ -1,0 +1,145 @@
+.menu {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+    position: absolute;
+}
+
+.menu * {
+    box-sizing: border-box;
+}
+
+.menu::after {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    background-color: black;
+    opacity: 0.5;
+    width: 2000px;
+    height: 2000px;
+    z-index: 2;
+}
+
+
+/*@media screen and (max-width: 890px) {*/
+/*    .menu {*/
+/*        max-width: 100%;*/
+/*    }*/
+
+/*    .menu::after {*/
+/*        max-width: 100%;*/
+/*        box-sizing: border-box;*/
+/*    }*/
+/*}*/
+
+.menu__close {
+    border: none;
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    top: 22.4px;
+    right: 22.4px;
+    background: url('../../images/close.svg') center no-repeat;
+}
+
+@media (max-width: 767px) {
+    .menu__close {
+        right: 13.44px;
+        top: 13.44px;
+    }
+}
+
+
+.menu__container {
+    padding: 159px 90px 90px 90px;
+    box-sizing: border-box;
+    position: fixed;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 520px;
+    height: 100vh;
+    background-color: #202020;
+    right: 0;
+}
+
+@media (max-width: 767px) {
+    .menu__container {
+        padding: 144px 10px 46px;
+        width: 100%;
+        /*padding-bottom: 46px;*/
+    }
+}
+
+.menu_opened {
+    visibility: visible;
+    opacity: 1;
+    display: block;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.menu__group {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+
+}
+
+@media (max-width: 767px) {
+    .menu__group {
+        gap: 24px;
+    }
+}
+
+
+
+.menu__link {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.menu__link:hover, .menu__link:active {
+    opacity: .8;
+}
+
+.menu__profile {
+    align-self: center;
+    position: relative;
+}
+
+.menu__link_state_active {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu__link_state_active::before {
+    content: '';
+    height: 2px;
+    width: 72px;
+    position: absolute;
+    background-color: white;
+    bottom: -4px;
+    align-self: center;
+}
+
+
+@media (max-width: 767px) {
+    .menu__link_state_active::before {
+        bottom: -7px;
+    }
+}
+
+
+/*.menu__profile_state_active::before {*/
+/*    content: '';*/
+/*    border: 1px solid white;*/
+/*}*/

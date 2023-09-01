@@ -4,7 +4,7 @@ import './Profile.css';
 import { Link } from 'react-router-dom';
 const Profile = () => {
   const error = true;
-  const editing = true;
+  const editing = false;
   return (
     <main className="profile">
       <h1 className="profile__title">Привет, Виталий!</h1>
