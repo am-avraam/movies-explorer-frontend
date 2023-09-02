@@ -7,7 +7,8 @@ const FilterCheckbox = ({ check }) => {
       <div className="movies__switch">
         <input
           onChange={() => {}}
-          checked={check}
+          defaultChecked={false}
+          // checked={check}
           type="checkbox"
           className="movies__checkbox"
           name={'switch'}

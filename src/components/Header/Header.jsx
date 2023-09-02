@@ -2,24 +2,27 @@ import React, { useState } from 'react';
 import logo from '../../images/logo.svg';
 import './Header.css';
 import { Link, useLocation } from 'react-router-dom';
-import { SideMenu } from 'components/SideMenu/SideMenu';
+import { SideMenu } from '../SideMenu/SideMenu';
 
 const exceptions = new Set(['/sign-in', '/sign-up', '/404']);
+const loggedPages = new Set(['/saved-movies', '/movies', '/profile']);
 
-function Header({ landing }) {
+function Header() {
   const { pathname } = useLocation();
   const isLanding = pathname === '/';
+
+  const isLoggedIn = loggedPages.has(pathname);
 
   const [isSideMenuOpen, setSideMenuOpen] = useState(false);
   function handleSideMenuClick() {
     setSideMenuOpen(true);
   }
 
-  function handleEscClose(e) {
+  const handleEscClose = (e) => {
     if (e.key === 'Escape') {
       setSideMenuOpen(false);
     }
-  }
+  };
 
   if (exceptions.has(pathname)) return null;
 
@@ -32,45 +35,49 @@ function Header({ landing }) {
         onClose={() => setSideMenuOpen(false)}
       />
       <header className={`header ${isLanding && 'header__landing'}`}>
-        <div className="header__wrapper">
-          <Link className="header__home" to="/">
-            <img src={logo} alt="" />
-          </Link>
-          <div className="header__links">
-            <Link
-              className={`header__link header__hideable ${pathname === '/movies' && 'header__link_state_active'}`}
-              to="/movies"
-            >
-              Фильмы
+        <div className="header__container">
+          <div className="header__wrapper">
+            <Link className="header__home" to="/">
+              <img src={logo} alt="логотип" />
             </Link>
-            <Link
-              className={`header__link header__hideable ${pathname === '/saved-movies' && 'header__link_state_active'}`}
-              to="/saved-movies"
-            >
-              Сохраненные фильмы
-            </Link>
+            <div className="header__links">
+              <Link
+                className={`header__link header__hideable ${pathname === '/movies' && 'header__link_state_active'}`}
+                to="/movies"
+              >
+                Фильмы
+              </Link>
+              <Link
+                className={`header__link header__hideable ${
+                  pathname === '/saved-movies' && 'header__link_state_active'
+                }`}
+                to="/saved-movies"
+              >
+                Сохраненные фильмы
+              </Link>
+            </div>
           </div>
+          {isLoggedIn ? (
+            <>
+              <button onClick={handleSideMenuClick} type="button" className="header__burger" />
+              <Link
+                to="/profile"
+                className={`header__profile header__hideable ${isLanding && 'header__profile_location_landing'}`}
+              >
+                Аккаунт
+              </Link>
+            </>
+          ) : (
+            <div className="header__wrapper header__wrapper_side_right">
+              <Link to="sign-up" className="header__button header__button-signup">
+                Регистрация
+              </Link>
+              <Link to="sign-in" className="header__button header__button-signin">
+                Войти
+              </Link>
+            </div>
+          )}
         </div>
-        {false ? (
-          <div className="header__wrapper header__wrapper_side_right">
-            <Link to="sign-up" className="header__button header__button-signup">
-              Регистрация
-            </Link>
-            <Link to="sign-in" className="header__button header__button-signin">
-              Войти
-            </Link>
-          </div>
-        ) : (
-          <>
-            <button onClick={handleSideMenuClick} type="button" className="header__burger" />
-            <Link
-              to="/profile"
-              className={`header__profile header__hideable ${isLanding && 'header__profile_location_landing'}`}
-            >
-              Аккаунт
-            </Link>
-          </>
-        )}
       </header>
     </>
   );

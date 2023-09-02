@@ -6,14 +6,13 @@ import Footer from '../Footer/Footer';
 const Movies = ({ saved }) => {
   return (
     <>
-      <div className="movies">
-        {/*<Header />*/}
-        <main className="movies__main">
+      <main className="movies">
+        <div className="movies__main">
           <SearchForm />
           <MoviesCardList saved={saved} />
           <button className="movies__expand">Еще</button>
-        </main>
-      </div>
+        </div>
+      </main>
       <Footer />
     </>
   );

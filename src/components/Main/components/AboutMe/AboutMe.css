@@ -1,19 +1,37 @@
-.myself{
+.myself {
     background-color: #202020;
+}
+
+.myself__content{
     padding: 110px 70px 100px 70px;
 }
 
 @media (max-width: 1279px) {
-    .myself {
+    .myself__content {
         padding: 90px 50px;
     }
 }
 
 @media (max-width: 767px) {
-    .myself {
+    .myself__content {
         padding: 70px 14px;
     }
 }
+
+
+@media (min-width: 1280px) {
+    .myself__content {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .myself__content {
+        width: 1280px;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+}
+
 
 .myself__container {
     padding-top: 66px;

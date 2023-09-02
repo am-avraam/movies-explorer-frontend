@@ -3,17 +3,28 @@ import { initFormState } from '../../utils/constants';
 import './Login.css';
 import logo from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
-export const Login = ({ onLogin }) => {
+import { validate } from '../../utils/validation';
+
+export const Login = ({ onLogin = () => {} }) => {
   const [formValue, setFormValue] = useState(initFormState);
+  const [isSuccessfulValidated, setSuccessfulValidated] = useState(true);
 
   const error = true;
   const handleSubmit = (e) => {
     e.preventDefault();
-    onLogin(formValue.email, formValue.password);
+
+    if (validate({ email: formValue.email, password: formValue.password })) {
+      setSuccessfulValidated(true);
+      onLogin(formValue.email, formValue.password);
+    } else {
+      setSuccessfulValidated(false);
+    }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (!isSuccessfulValidated) setSuccessfulValidated(true);
 
     setFormValue({
       ...formValue,
@@ -22,56 +33,63 @@ export const Login = ({ onLogin }) => {
   };
 
   return (
-    <div className="login">
-      <div>
-        <Link className="login__home" to="/">
-          <img src={logo} alt="" />
-        </Link>
-        <h1 className="login__title">Рады видеть!</h1>
-        <form className="login__form" id="login-form-auth" onSubmit={handleSubmit}>
-          <label className="login__label" htmlFor="email">
-            Email
-          </label>
-          <input
-            onChange={handleChange}
-            value={formValue.email}
-            className="login__input"
-            name="email"
-            type="text"
-            required
-            minLength="2"
-            maxLength="40"
-          />
-          <span className={`login__tip ${!error && 'login__tip_state_active'}`}>Что-то пошло не так...</span>
-
-          <label className="login__label" htmlFor="password">
-            Пароль
-          </label>
-          <input
-            onChange={handleChange}
-            value={formValue.password}
-            className={`login__input ${error && 'login__input_state_error'}`}
-            name="password"
-            type="password"
-            required
-            minLength="2"
-            maxLength="200"
-          />
-          <span className={`login__tip ${error && 'login__tip_state_active'}`}>Что-то пошло не так...</span>
-        </form>
-      </div>
-
-      <div className="login__container_side_bottom">
-        <button type="submit" form="login-form-auth" className="login__auth">
-          Войти
-        </button>
-        <section className="login__revision">
-          <span className="login__question">Ещё не зарегистрированы?</span>
-          <Link to="/sign-up" className="login__link">
-            Регистрация
+    <main className="login">
+      <div className="login__content">
+        <div>
+          <Link className="login__home" to="/">
+            <img src={logo} alt="логотип" />
           </Link>
-        </section>
+          <h1 className="login__title">Рады видеть!</h1>
+          <form className="login__form" id="login-form-auth" onSubmit={handleSubmit}>
+            <label className="login__label" htmlFor="email">
+              Email
+            </label>
+            <input
+              onChange={handleChange}
+              value={formValue.email}
+              className="login__input"
+              name="email"
+              placeholder="putin@president.ru"
+              type="text"
+            />
+            <span className={`login__tip ${!isSuccessfulValidated && 'login__tip_state_active'}`}>
+              Что-то пошло не так...
+            </span>
+
+            <label className="login__label" htmlFor="password">
+              Пароль
+            </label>
+            <input
+              onChange={handleChange}
+              value={formValue.password}
+              className={`login__input ${!isSuccessfulValidated && 'login__input_state_error'}`}
+              name="password"
+              type="password"
+              placeholder="желательно в заметки сохранить"
+            />
+            <span className={`login__tip ${!isSuccessfulValidated && 'login__tip_state_active'}`}>
+              Что-то пошло не так...
+            </span>
+          </form>
+        </div>
+
+        <div className="login__container_side_bottom">
+          <button
+            disabled={!isSuccessfulValidated}
+            type="submit"
+            form="login-form-auth"
+            className={`login__auth ${!isSuccessfulValidated && 'login__auth_state_error'}`}
+          >
+            Войти
+          </button>
+          <section className="login__revision">
+            <span className="login__question">Ещё не зарегистрированы?</span>
+            <Link to="/sign-up" className="login__link">
+              Регистрация
+            </Link>
+          </section>
+        </div>
       </div>
-    </div>
+    </main>
   );
 };

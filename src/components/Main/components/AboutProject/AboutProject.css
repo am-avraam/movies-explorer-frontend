@@ -1,17 +1,34 @@
-.description {
-    background-color: #202020;
+.description__content {
     padding: 110px 70px;
 }
 
 @media (max-width: 1279px) {
-    .description {
+    .description__content {
         padding: 90px 50px;
     }
 }
 
 @media (max-width: 767px) {
-    .description {
+    .description__content {
         padding: 70px 18px 69px;
+    }
+}
+
+.description {
+    background-color: #202020;
+}
+
+@media (min-width: 1280px) {
+    .description {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .description__content {
+        margin: 0 auto;
+        width: 1280px;
+        box-sizing: border-box;
+
     }
 }
 

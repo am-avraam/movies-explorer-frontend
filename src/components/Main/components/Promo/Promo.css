@@ -1,12 +1,16 @@
 .promo {
+    background-color: rgba(7, 48, 66, 1);
+}
+
+.promo__content {
     height: 560px;
     box-sizing: border-box;
     padding: 50px 70px 0 70px;
-    background: rgba(7, 48, 66, 1) url('../../../../images/main_logo.svg') right 70px bottom 60px no-repeat;
+    background: url('../../../../images/main_logo.svg') right 70px bottom 60px no-repeat;
 }
 
 @media (max-width: 1279px) {
-    .promo {
+    .promo__content {
         padding-top: 300px;
         height: 844px;
         background-position: center bottom 70px;
@@ -15,10 +19,22 @@
 }
 
 @media (max-width: 767px) {
-    .promo {
+    .promo__content {
         padding: 183px 10px 0;
         height: 630px;
         background-position: center bottom 40px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .promo {
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .promo__content {
+        width: 1280px;
+        margin: 0 auto;
     }
 }
 
