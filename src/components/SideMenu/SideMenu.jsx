@@ -25,16 +25,16 @@ export const SideMenu = ({ handleEscClose, isOpen, onClose }) => {
       <div className="menu__container">
         <div className="menu__group">
           <Link className={`menu__link  ${pathname === '/' && 'menu__link_state_active'}`} to="/">
-            Главная
+            <span className='menu__span'>Главная</span>
           </Link>
           <Link className={`menu__link  ${pathname === '/movies' && 'menu__link_state_active'}`} to="/movies">
-            Фильмы
+          <span className='menu__span'>Фильмы</span>
           </Link>
           <Link
             className={`menu__link  ${pathname === '/saved-movies' && 'menu__link_state_active'}`}
             to="/saved-movies"
           >
-            Сохраненные фильмы
+          <span className='menu__span'>Сохраненные фильмы</span>
           </Link>
         </div>
 
@@ -43,6 +43,7 @@ export const SideMenu = ({ handleEscClose, isOpen, onClose }) => {
           className={`header__profile menu__profile ${pathname === '/profile' && 'menu__link_state_active'}`}
         >
           Аккаунт
+          <span className='menu__span'></span>
         </Link>
         <button onClick={onClose} type="button" className="menu__close"></button>
       </div>

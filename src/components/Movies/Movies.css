@@ -1,7 +1,36 @@
 .movies {
     background-color: #202020;
-    padding: 0 70px;
 }
+
+.movies__main {
+    padding: 70px 70px 80px;
+}
+
+@media (max-width: 767px) {
+    .movies__main {
+        padding: 0 10px;
+    }
+}
+
+
+@media (max-width: 1279px) {
+    .movies__main {
+        padding: 80px 30px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .movies {
+        width: 100%;
+    }
+
+    .movies__main {
+        box-sizing: border-box;
+        width: 1280px;
+        margin: 0 auto;
+    }
+}
+
 
 .movies__expand {
     text-decoration: none;
@@ -24,26 +53,4 @@
 
 .movies__expand:hover, .movies__expand:active {
     opacity: .8;
-}
-
-@media (max-width: 1279px) {
-    .movies {
-        padding: 0 30px;
-    }
-}
-
-@media (max-width: 767px) {
-    .movies {
-        padding: 0 10px;
-    }
-}
-
-.movies__main {
-    padding-top: 70px;
-}
-
-@media (max-width: 1279px) {
-    .movies__main {
-        padding: 80px 0;
-    }
 }

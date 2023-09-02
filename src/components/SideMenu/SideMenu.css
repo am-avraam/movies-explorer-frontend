@@ -22,6 +22,7 @@
 }
 
 .menu__close {
+    cursor: pointer;
     border: none;
     position: absolute;
     width: 22px;
@@ -103,19 +104,41 @@
 }
 
 .menu__link_state_active {
-    position: relative;
-    display: flex;
-    flex-direction: column;
+    /*position: relative;*/
+    /*display: flex;*/
+    /*flex-direction: column;*/
 }
 
 .menu__link_state_active::before {
+    /*content: '';*/
+    /*height: 2px;*/
+    /*width: 72px;*/
+    /*position: absolute;*/
+    /*background-color: white;*/
+    /*bottom: -4px;*/
+    /*align-self: center;*/
+}
+
+.menu__span {
+    width: 100%;
+    position: relative;
+}
+
+.menu__link_state_active .menu__span::before {
     content: '';
     height: 2px;
-    width: 72px;
+    /*width: 72px;*/
+    width: 100%;
     position: absolute;
     background-color: white;
     bottom: -4px;
     align-self: center;
+}
+
+.menu__profile .menu__span::before {
+    bottom: -10px;
+    left: -5.5px;
+    width: 100px;
 }
 
 
