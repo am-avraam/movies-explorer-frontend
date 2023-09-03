@@ -1,0 +1,242 @@
+.login {
+    width: 100%;
+    height: 100%;
+    background-color: #202020;
+}
+
+@media (min-height: 700px) {
+    .login__content {
+        height: 100vh;
+    }
+}
+
+.login__content {
+    max-width: 396px;
+    margin: 0 auto;
+    padding-top: 70px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding-bottom: 70px;
+    gap: 203px;
+    background-color: #202020;
+}
+
+@media (max-width: 1279px) {
+    .login__content {
+        padding-top: 232px;
+        padding-bottom: 232px;
+    }
+}
+
+@media (max-width: 767px) {
+    .login__content {
+        padding: 56px 30px 30px;
+
+    }
+}
+
+.login__content-register {
+    gap: 134px;
+}
+
+@media (max-width: 767px) {
+    .login__content {
+        gap: 291px;
+    }
+
+    .login__content-register {
+        gap: 222px;
+    }
+}
+
+.login__home {
+    display: flex;
+}
+
+@media (max-width: 767px) {
+    .login__home {
+        justify-content: center;
+    }
+}
+
+.login__title {
+    text-align: left;
+    font-family: 'Inter', ‘Arial’, sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    margin: 40px 0;
+}
+
+@media (max-width: 767px) {
+    .login__title {
+        margin-top: 50px;
+        margin-bottom: 80px;
+        text-align: center;
+    }
+}
+
+.login__form {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.login__wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.login__label {
+    display: flex;
+    font-size: 10px;
+    line-height: 12px;
+    color: #8B8B8B;
+    margin-bottom: 5px;
+}
+
+.login__tip {
+    font-size: 0;
+}
+
+.login__tip_state_active {
+    color: #EE3465;
+    text-align: initial;
+    font-size: 10px;
+    line-height: 12px;
+    margin-bottom: 6px;
+}
+
+.login__tip_state_active.login__tip::before {
+    margin-bottom: 6px;
+}
+
+.login__tip_state_active:last-of-type {
+    margin-bottom: 0;
+}
+
+.login__tip::before {
+    content: '';
+    height: 1px;
+    background-color: #424242;
+    width: 100%;
+    display: block;
+    margin-bottom: 24px;
+}
+
+.login__input:focus + .login__tip::before {
+    background-color: #4285F4;
+}
+
+.login__tip_state_active.login__tip:last-of-type::before {
+    margin-bottom: 6px;
+}
+
+.login__tip:last-of-type::before {
+    margin-bottom: 18px;
+}
+
+.login__input {
+    text-decoration: none;
+    border: none;
+    padding: 0 0 10px 0;
+    background: transparent;
+    display: block;
+    outline: none;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+}
+
+/*.login__input:focus {*/
+/*    outline: 1px solid red;*/
+/*}*/
+
+.login__input[placeholder] {
+    width: 100%;
+    border: none;
+    font-family: 'Inter', ‘Arial’, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #CCCCCC;
+    /*border-bottom: 2px solid #CCCCCC;*/
+}
+
+.login__input_state_error {
+    color: #EE3465;
+}
+
+.login__auth {
+    cursor: pointer;
+    width: 100%;
+    background: #4285F4;
+    border-radius: 2px;
+    height: 45px;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    border: none;
+}
+
+.login__auth_state_error {
+    cursor: none;
+    color: #C2C2C2;
+    background-color: #F8F8F8;
+}
+
+@media (max-width: 767px) {
+    .login__auth {
+        font-size: 12px;
+        line-height: 15px;
+    }
+}
+
+.login__auth:hover {
+    opacity: 0.85;
+}
+
+.login__link {
+    display: block;
+    /*margin-top: 15px;*/
+    margin-left: 6px;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #4285F4;
+    text-decoration: none;
+}
+
+@media (max-width: 767px) {
+    .login__link {
+        font-size: 12px;
+        line-height: 15px;
+        margin-left: 7px;
+    }
+}
+
+.login__link:hover {
+    opacity: 0.6;
+}
+
+.login__revision {
+    display: flex;
+    flex-direction: row;
+    margin-top: 16px;
+    justify-content: center;
+}
+
+.login__question {
+    font-size: 14px;
+    line-height: 17px;
+    color: #8B8B8B;
+}
+
+@media (max-width: 767px) {
+    .login__question {
+        font-size: 12px;
+        line-height: 15px;
+    }
+}

@@ -1,0 +1,22 @@
+/.git
+/.vscode
+.idea
+node_modules
+build
+package.json
+yarn.lock
+package-lock.json
+.eslintrc.json
+tsconfig.json
+public
+webpack
+babel.config.js
+babel-plugin-macros.config.js
+webpack/plugins/module-federation-types-plugin/dts-compiler
+**/*.snap
+**/*.json
+**/*.d.ts
+# WASM library
+**/*.md
+*.svg
+*.css
