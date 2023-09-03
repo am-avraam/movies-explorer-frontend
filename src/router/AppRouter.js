@@ -6,6 +6,7 @@ import Movies from './../components/Movies/Movies';
 import { Login } from './../components/Login/Login';
 import { Register } from './../components/Register/Register';
 import Header from '../components/Header/Header';
+
 import Profile from '../components/Profile/Profile';
 import NotFound from '../components/NotFound/NotFound';
 
@@ -14,6 +15,9 @@ const AppRouter = () => {
   const navigate = useNavigate();
   const loggedIn = true;
 
+  const onRegister = () => {
+    navigate('/movies', { replace: true });
+  };
 
   return (
     <>
@@ -50,22 +54,8 @@ const AppRouter = () => {
           }
         />
 
-        <Route
-          path="/sign-in"
-          element={
-            <Login
-            // onLogin={handleAuthorization}
-            />
-          }
-        />
-        <Route
-          path="/sign-up"
-          element={
-            <Register
-            // onRegister={handleRegistrationQuery}
-            />
-          }
-        />
+        <Route path="/sign-in" element={<Login onLogin={onRegister} />} />
+        <Route path="/sign-up" element={<Register onRegister={onRegister} />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<Navigate to="404" replace />} />
 

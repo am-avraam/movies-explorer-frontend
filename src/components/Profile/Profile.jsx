@@ -45,7 +45,6 @@ const Profile = ({ onEdit = () => {} }) => {
             <input
               onChange={handleChange}
               value={formValue.name}
-              defaultValue="Виталий"
               className="profile__input"
               name="name"
               type="text"

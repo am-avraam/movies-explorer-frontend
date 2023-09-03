@@ -16,7 +16,7 @@ function AboutMe() {
               музыку, а ещё увлекаюсь бегом. Недавно начал кодить. С 2015 года работал в компании «СКБ Контур». После
               того, как прошёл курс по веб-разработке, начал заниматься фриланс-заказами и ушёл с постоянной работы.
             </p>
-            <a className="myself__link" href="https://github.com/am-avraam">
+            <a className="myself__link" href="https://github.com/am-avraam" target="_blank" rel="noreferrer">
               Github
             </a>
           </section>

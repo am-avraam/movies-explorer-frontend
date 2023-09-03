@@ -32,6 +32,7 @@
 
 .movies__input {
     all: unset;
+    /*outline: #0F4157 1px solid;*/
     position: relative;
     box-sizing: border-box;
     width: 100%;
@@ -41,6 +42,10 @@
     padding-left: 63px;
     padding-right: 276px;
     background: #2F2F2F url("../../../images/search.svg") no-repeat left 19px top 21px;
+}
+
+.movies__input:focus {
+    border: solid #4285F4;
 }
 
 @media (max-width: 767px) {
@@ -64,6 +69,10 @@
     line-height: 20px;
     font-weight: 400;
     text-align: left;
+}
+
+.movies__input:active {
+    outline: #0F4157 1px solid;
 }
 
 @media (max-width: 767px) {

@@ -9,7 +9,6 @@ export const Login = ({ onLogin = () => {} }) => {
   const [formValue, setFormValue] = useState(initFormState);
   const [isSuccessfulValidated, setSuccessfulValidated] = useState(true);
 
-  const error = true;
   const handleSubmit = (e) => {
     e.preventDefault();
 

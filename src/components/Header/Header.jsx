@@ -41,20 +41,24 @@ function Header() {
               <img src={logo} alt="логотип" />
             </Link>
             <div className="header__links">
-              <Link
-                className={`header__link header__hideable ${pathname === '/movies' && 'header__link_state_active'}`}
-                to="/movies"
-              >
-                Фильмы
-              </Link>
-              <Link
-                className={`header__link header__hideable ${
-                  pathname === '/saved-movies' && 'header__link_state_active'
-                }`}
-                to="/saved-movies"
-              >
-                Сохраненные фильмы
-              </Link>
+              {isLoggedIn && (
+                <>
+                  <Link
+                    className={`header__link header__hideable ${pathname === '/movies' && 'header__link_state_active'}`}
+                    to="/movies"
+                  >
+                    Фильмы
+                  </Link>
+                  <Link
+                    className={`header__link header__hideable ${
+                      pathname === '/saved-movies' && 'header__link_state_active'
+                    }`}
+                    to="/saved-movies"
+                  >
+                    Сохраненные фильмы
+                  </Link>
+                </>
+              )}
             </div>
           </div>
           {isLoggedIn ? (

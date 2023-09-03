@@ -32,6 +32,10 @@
     background: url('../../images/close.svg') center no-repeat;
 }
 
+.menu__close:hover {
+    opacity: .8;
+}
+
 @media (max-width: 767px) {
     .menu__close {
         right: 13.44px;
