@@ -4,11 +4,10 @@ import '../Login/Login.css';
 import logo from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
 import { validate } from 'utils/validation';
-export const Register = ({ onRegister }) => {
+export const Register = ({ onRegister = () => {} }) => {
   const [formValue, setFormValue] = useState(initFormState);
   const [isSuccessfulValidated, setSuccessfulValidated] = useState(true);
 
-  const error = true;
   const handleSubmit = (e) => {
     e.preventDefault();
 
