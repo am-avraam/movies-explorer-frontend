@@ -71,6 +71,10 @@
     text-align: left;
 }
 
+.movies__input_state_error::placeholder {
+    color: red;
+}
+
 .movies__input:active {
     outline: #0F4157 1px solid;
 }
