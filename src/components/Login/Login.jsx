@@ -5,7 +5,7 @@ import logo from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
 import { validate } from '../../utils/validation';
 
-export const Login = ({ onLogin = () => {} }) => {
+export const Login = ({ onLogin = (a, b) => {} }) => {
   const [formValue, setFormValue] = useState(initFormState);
   const [isSuccessfulValidated, setSuccessfulValidated] = useState(true);
 

@@ -36,10 +36,30 @@
 .movies__card {
     width: 100%;
 }
+
 .movies__image {
     max-width: 100%;
     display: block;
 }
+
+@media (max-width: 767px) {
+    .movies__image {
+        height: 168px;
+    }
+}
+
+@media (max-width: 1279px) {
+    .movies__image {
+        height: 190px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .movies__image {
+        height: 151px;
+    }
+}
+
 .movies__description {
     position: relative;
     display: flex;

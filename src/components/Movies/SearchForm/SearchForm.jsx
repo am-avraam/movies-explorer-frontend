@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import './SearchForm.css';
 import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
-const SearchForm = ({ onCheck, onQuery, isShortened }) => {
+const SearchForm = ({ onCheck, onQuery, isShortened, movieQuery }) => {
   const [isEmptyQuery, setIsEmptyQuery] = useState(false);
   const queryRef = useRef();
 
@@ -10,7 +10,7 @@ const SearchForm = ({ onCheck, onQuery, isShortened }) => {
     if (queryRef.current?.value.length) {
       onQuery(queryRef.current?.value);
       setIsEmptyQuery(false);
-      queryRef.current.value = '';
+      // queryRef.current.value = '';
     } else {
       setIsEmptyQuery(true);
     }
@@ -20,6 +20,7 @@ const SearchForm = ({ onCheck, onQuery, isShortened }) => {
     <form onSubmit={onSubmit} className="movies__searchform">
       <input
         ref={queryRef}
+        defaultValue={movieQuery}
         className={`movies__input ${isEmptyQuery && 'movies__input_state_error'}`}
         type="text"
         placeholder={isEmptyQuery ? 'Нужно ввести ключевое слово' : 'Фильм'}

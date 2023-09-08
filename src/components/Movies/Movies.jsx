@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Movies.css';
 import SearchForm from './SearchForm/SearchForm';
 import MoviesCardList from './MoviesCardList/MoviesCardList';
@@ -10,8 +10,14 @@ import filterListByQuery from '../../utils/filterListByQuery';
 
 const Movies = ({ saved }) => {
   const [showingShortened, setShowingShortened] = useState(false);
+
+  const [isEmpty, setIsEmpty] = useState(false);
   const [isBigAmount, setIsBigAmount] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  const [movieQuery, setMovieQuery] = useState('');
 
   const [moviesList, setMoviesList] = useState([]);
   const [moviesListToShow, setMoviesListToShow] = useState([]);
@@ -22,6 +28,8 @@ const Movies = ({ saved }) => {
   }
 
   const getQuery = (query) => {
+    setIsEmpty(false);
+    setMovieQuery(query);
     const currentColumnCount = getColumnCount(moviesListRef.current);
 
     setIsLoading(true);
@@ -30,11 +38,19 @@ const Movies = ({ saved }) => {
       .getMovies(query)
       .then((movies) => {
         const entireFilteredList = filterListByQuery(movies, query);
+
+        if (entireFilteredList.length === 0) {
+          setIsLoading(false);
+          setIsEmpty(true);
+          setMoviesListToShow([]);
+          setIsError(false);
+          return;
+        }
+
+        console.log(entireFilteredList.length);
         setMoviesList(entireFilteredList);
 
-        console.log(entireFilteredList.length, currentColumnCount * 4);
         if (entireFilteredList.length > currentColumnCount * 4) {
-          console.log('Бля');
           setIsBigAmount(true);
           setMoviesListToShow(entireFilteredList.slice(0, currentColumnCount * 4));
         } else {
@@ -44,32 +60,68 @@ const Movies = ({ saved }) => {
 
         setIsLoading(false);
       })
-      .catch((err) => console.log(`Ошибка.....: ${err}`));
+      .catch((err) => {
+        setIsError(true);
+        console.log(`Ошибка.....: ${err}`);
+      });
   };
 
-  const onShowMore = () => {};
+  const onShowMore = () => {
+    const nextListCount = moviesListToShow.length + getColumnCount(moviesListRef.current) * 4;
+    if (nextListCount >= moviesList.length) {
+      setIsBigAmount(false);
+    }
+    setMoviesListToShow(moviesList.slice(0, nextListCount));
+  };
+
+  useEffect(() => {
+    // localStorage.setItem('movies', JSON.stringify({ moviesListToShow, movieQuery, showingShortened }));
+    // return () => {
+    //   localStorage.removeItem('movies'); // вызывать при выходе пользователя
+    // };
+    movieQuery && localStorage.setItem('movies', JSON.stringify({ moviesListToShow, movieQuery, showingShortened }));
+
+    // return () => {
+    //   movieQuery && localStorage.setItem('movies', JSON.stringify({ moviesListToShow, movieQuery, showingShortened }));
+    // };
+  }, [moviesListToShow, movieQuery, showingShortened]);
+
+  useEffect(() => {
+    const data = localStorage.getItem('movies');
+
+    if (data) {
+      const { moviesListToShow, movieQuery, showingShortened } = JSON.parse(data);
+      moviesListToShow.length > getColumnCount(moviesListRef.current) * 4 && setIsBigAmount(true);
+      setMoviesListToShow(moviesListToShow);
+      setShowingShortened(showingShortened);
+      setMovieQuery(movieQuery);
+    }
+  }, []);
 
   return (
     <>
       <main className="movies">
         <div className="movies__main">
-          <SearchForm onQuery={getQuery} onCheck={onCheckShortened} isShortened={showingShortened} />
-          {isLoading && <Preloader />}
-          {!isLoading && (
-            <MoviesCardList
-              movies={moviesListToShow}
-              ref={moviesListRef}
-              saved={saved}
-              isShortened={showingShortened}
-            />
-          )}
+          <SearchForm
+            movieQuery={movieQuery}
+            onQuery={getQuery}
+            onCheck={onCheckShortened}
+            isShortened={showingShortened}
+          />
+
+          <MoviesCardList movies={moviesListToShow} ref={moviesListRef} saved={saved} isShortened={showingShortened}>
+            {isError && (
+              <span>
+                «Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите
+                немного и попробуйте ещё раз
+              </span>
+            )}
+            {isLoading && <Preloader />}
+            {isEmpty && <span>Ничего не найдено</span>}
+          </MoviesCardList>
+
           {isBigAmount && (
-            <button
-              onClick={() => {
-                setMoviesListToShow(moviesList.slice(0, getColumnCount(moviesListRef.current) * 2 * 4));
-              }}
-              className="movies__expand"
-            >
+            <button onClick={onShowMore} className="movies__expand">
               Еще
             </button>
           )}
