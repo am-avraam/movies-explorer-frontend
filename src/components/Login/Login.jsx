@@ -3,32 +3,55 @@ import { initFormState } from '../../utils/constants';
 import './Login.css';
 import logo from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
-import { validate } from '../../utils/validation';
+import { validate, validateEmail, validateName, validatePassword } from '../../utils/validation';
 
-export const Login = ({ onLogin = (a, b) => {} }) => {
+export const Login = ({ onLogin, error }) => {
   const [formValue, setFormValue] = useState(initFormState);
+
   const [isSuccessfulValidated, setSuccessfulValidated] = useState(true);
+
+  const [isAppropriateEmail, setIsAppropriateEmail] = useState(false);
+  const [isAppropriatePassword, setIsAppropriatePassword] = useState(false);
+
+  const validationFailed = !isAppropriateEmail || !isAppropriatePassword;
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (validate({ email: formValue.email, password: formValue.password })) {
-      setSuccessfulValidated(true);
-      onLogin(formValue.email, formValue.password);
-    } else {
-      setSuccessfulValidated(false);
-    }
+    // if (validate({ email: formValue.email, password: formValue.password })) {
+    // setSuccessfulValidated(true);
+    onLogin(formValue.email, formValue.password);
+    // } else {
+    //   setSuccessfulValidated(false);
+    // }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    // if (!isSuccessfulValidated) setSuccessfulValidated(true);
 
-    if (!isSuccessfulValidated) setSuccessfulValidated(true);
+    let validationResult;
+    if (name === 'email') {
+      validationResult = validateEmail(value);
+      setIsAppropriateEmail(validationResult);
+    }
+
+    if (name === 'password') {
+      validationResult = value.length;
+      setIsAppropriatePassword(validationResult);
+    }
 
     setFormValue({
       ...formValue,
       [name]: value,
     });
+
+    if (!validationResult) {
+      setSuccessfulValidated(false);
+      return;
+    }
+
+    setSuccessfulValidated(true);
   };
 
   return (
@@ -46,13 +69,13 @@ export const Login = ({ onLogin = (a, b) => {} }) => {
             <input
               onChange={handleChange}
               value={formValue.email}
-              className="login__input"
+              className={`login__input ${!isAppropriateEmail && 'login__input_state_error'}`}
               name="email"
               placeholder="putin@president.ru"
               type="text"
             />
-            <span className={`login__tip ${!isSuccessfulValidated && 'login__tip_state_active'}`}>
-              Что-то пошло не так...
+            <span className={`login__tip ${!isAppropriateEmail && 'login__tip_state_active'}`}>
+              Необходимо ввести корректный email.
             </span>
 
             <label className="login__label" htmlFor="password">
@@ -61,23 +84,24 @@ export const Login = ({ onLogin = (a, b) => {} }) => {
             <input
               onChange={handleChange}
               value={formValue.password}
-              className={`login__input ${!isSuccessfulValidated && 'login__input_state_error'}`}
+              className={`login__input ${!isAppropriatePassword && 'login__input_state_error'}`}
               name="password"
               type="password"
               placeholder="желательно в заметки сохранить"
             />
-            <span className={`login__tip ${!isSuccessfulValidated && 'login__tip_state_active'}`}>
-              Что-то пошло не так...
+            <span className={`login__tip ${!isAppropriatePassword && 'login__tip_state_active'}`}>
+              Необходимо ввести пароль.
             </span>
           </form>
         </div>
 
         <div className="login__container_side_bottom">
+          {error && <span className="login__error">{error}</span>}
           <button
-            disabled={!isSuccessfulValidated}
+            disabled={validationFailed || !isSuccessfulValidated}
             type="submit"
             form="login-form-auth"
-            className={`login__auth ${!isSuccessfulValidated && 'login__auth_state_error'}`}
+            className={`login__auth ${(validationFailed || !isSuccessfulValidated) && 'login__auth_state_error'}`}
           >
             Войти
           </button>

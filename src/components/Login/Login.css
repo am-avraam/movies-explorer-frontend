@@ -23,6 +23,11 @@
 }
 
 @media (max-width: 1279px) {
+
+    .login {
+        height: 1024px;
+    }
+
     .login__content {
         padding-top: 232px;
         padding-bottom: 232px;
@@ -169,6 +174,7 @@
     color: #EE3465;
 }
 
+
 .login__auth {
     cursor: pointer;
     width: 100%;
@@ -239,4 +245,19 @@
         font-size: 12px;
         line-height: 15px;
     }
+}
+
+
+.login__container_side_bottom {
+    position: relative;
+}
+
+.login__error {
+    position: absolute;
+    top: -20px;
+    display: block;
+    text-align: center;
+    width: 100%;
+    color: red;
+
 }

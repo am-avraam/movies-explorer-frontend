@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { UserContext } from '../../contexts/context';
+
 import logo from '../../images/logo.svg';
 import './Header.css';
 import { Link, useLocation } from 'react-router-dom';
@@ -11,7 +13,9 @@ function Header() {
   const { pathname } = useLocation();
   const isLanding = pathname === '/';
 
-  const isLoggedIn = loggedPages.has(pathname);
+  // const isLoggedIn = loggedPages.has(pathname);
+
+  const isLoggedIn = useContext(UserContext);
 
   const [isSideMenuOpen, setSideMenuOpen] = useState(false);
   function handleSideMenuClick() {

@@ -47,7 +47,7 @@ const Movies = ({ saved }) => {
           return;
         }
 
-        console.log(entireFilteredList.length);
+        console.log(entireFilteredList[0]);
         setMoviesList(entireFilteredList);
 
         if (entireFilteredList.length > currentColumnCount * 4) {
@@ -74,16 +74,20 @@ const Movies = ({ saved }) => {
     setMoviesListToShow(moviesList.slice(0, nextListCount));
   };
 
-  useEffect(() => {
-    // localStorage.setItem('movies', JSON.stringify({ moviesListToShow, movieQuery, showingShortened }));
-    // return () => {
-    //   localStorage.removeItem('movies'); // вызывать при выходе пользователя
-    // };
-    movieQuery && localStorage.setItem('movies', JSON.stringify({ moviesListToShow, movieQuery, showingShortened }));
+  function handleMovieLike(card) {
+    // const isLiked = card.likes.some(i => i._id === currentUser._id);
+    //
+    // // Отправляем запрос в API и получаем обновлённые данные карточки
+    // api.changeLikeCardStatus(card._id, !isLiked)
+    //   .then((newCard) => {
+    //     setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    //   })
+    //   .catch((err) => console.log(`Ошибка.....: ${err}`))
+  }
 
-    // return () => {
-    //   movieQuery && localStorage.setItem('movies', JSON.stringify({ moviesListToShow, movieQuery, showingShortened }));
-    // };
+  useEffect(() => {
+    //   localStorage.removeItem('movies'); // вызывать при выходе пользователя
+    movieQuery && localStorage.setItem('movies', JSON.stringify({ moviesListToShow, movieQuery, showingShortened }));
   }, [moviesListToShow, movieQuery, showingShortened]);
 
   useEffect(() => {
@@ -109,7 +113,13 @@ const Movies = ({ saved }) => {
             isShortened={showingShortened}
           />
 
-          <MoviesCardList movies={moviesListToShow} ref={moviesListRef} saved={saved} isShortened={showingShortened}>
+          <MoviesCardList
+            onMovieLike={handleMovieLike}
+            movies={moviesListToShow}
+            ref={moviesListRef}
+            saved={saved}
+            isShortened={showingShortened}
+          >
             {isError && (
               <span>
                 «Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите
