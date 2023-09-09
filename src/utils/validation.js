@@ -20,3 +20,17 @@ export const validateName = (nameInput) => {
 export const validatePassword = (passwordInput) => {
   return passwordInput.length > 6 && passwordInput.length < 40;
 };
+
+export const profileValidate = (newData, oldData) => {
+  const emailValidationResult = validateEmail(newData.email);
+  const nameValidationResult = validateName(newData.name);
+  const equalityValidationCompleted = !(JSON.stringify(newData) === JSON.stringify(oldData));
+
+  const validationResults = new Map([
+    [emailValidationResult, 'Введите корректный email'],
+    [nameValidationResult, 'Введите корректное имя'],
+    [equalityValidationCompleted, 'Введенные данные соответсвуют предыдущим'],
+  ]);
+
+  return [!validationResults.get(false), validationResults.get(false)];
+};

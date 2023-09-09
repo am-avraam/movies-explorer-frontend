@@ -58,6 +58,7 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 220px;
+    position: relative;
 }
 
 @media (max-width: 1279px) {
@@ -112,6 +113,7 @@
 }
 
 .profile__edit {
+    position: relative;
     background: none;
     border: none;
     font-size: 13px;
@@ -120,6 +122,21 @@
     margin-bottom: 16px;
     padding: 0;
     cursor: pointer;
+}
+
+.profile__notification {
+    position: absolute;
+    display: block;
+    text-align: center;
+    bottom: -40px;
+    color: #2BE080;
+    font-size: 11px;
+    line-height: 14px;
+    width: 100%;
+}
+
+.profile__notification_state_error {
+    color: red;
 }
 
 .profile__edit:hover, .profile__edit:active {

@@ -10,3 +10,6 @@ export const profileInitFormState = {
 };
 
 export const baseUrl = 'https://api.nomoreparties.co/';
+
+export const userUpdateCompleted = 'Данные успешно обновлены';
+export const userUpdateFailed = 'Произошла ошибка, повторите попытку';

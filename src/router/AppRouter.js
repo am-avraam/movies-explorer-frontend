@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Routes, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { ProtectedRouteElement as ProtectedRoute } from './ProtectedRoute';
 import Main from './../components/Main/Main';
@@ -11,6 +11,7 @@ import { UserContext } from '../contexts/context';
 
 import Profile from '../components/Profile/Profile';
 import NotFound from '../components/NotFound/NotFound';
+import mainApi from '../utils/MainApi';
 
 const AppRouter = () => {
   const [isAuthRequestCompleted, setIsAuthRequestCompleted] = useState(false);
@@ -25,7 +26,7 @@ const AppRouter = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     function handleTokenCheck() {
       const token = localStorage.getItem('token');
       if (token) {
@@ -36,7 +37,6 @@ const AppRouter = () => {
               setIsLoggedIn(true);
               setCurrentUser(data);
               setIsAuthRequestCompleted(true);
-              // navigate(1);
               if (pathname === '/sign-in' || pathname === '/sign-up') {
                 navigate('/movies', { replace: true });
               }
@@ -87,7 +87,6 @@ const AppRouter = () => {
   }
 
   function handleRegistrationQuery(email, password) {
-    console.log(isLoggedIn);
     authApi
       .register(email, password)
       .then((res) => {
@@ -113,7 +112,16 @@ const AppRouter = () => {
     setCurrentUser(null);
   }
 
-  console.log(isAuthRequestCompleted);
+  function handleUpdateUser(updatedInfo) {
+    return mainApi
+      .patchUser(updatedInfo)
+      .then(({ data: newUserInfo }) => {
+        setCurrentUser(newUserInfo);
+        return newUserInfo;
+      })
+      .catch((err) => console.log(`Ошибка.....: ${err}`));
+  }
+
   return (
     isAuthRequestCompleted && (
       <UserContext.Provider value={currentUser}>
@@ -126,7 +134,14 @@ const AppRouter = () => {
 
           <Route
             path="/profile"
-            element={<ProtectedRoute onSignOut={handleSignOut} loggedIn={isLoggedIn} element={Profile} />}
+            element={
+              <ProtectedRoute
+                onUpdateUser={handleUpdateUser}
+                onSignOut={handleSignOut}
+                loggedIn={isLoggedIn}
+                element={Profile}
+              />
+            }
           />
 
           <Route path="/sign-in" element={<Login onLogin={handleAuthorization} error={isAuthError} />} />

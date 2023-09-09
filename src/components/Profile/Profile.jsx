@@ -1,46 +1,40 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import './../Login/Login.css';
 import './Profile.css';
 import { Link } from 'react-router-dom';
-import { profileInitFormState } from '../../utils/constants';
-import { validate, validateEmail, validateName } from '../../utils/validation';
+import { profileValidate } from '../../utils/validation';
 import { UserContext } from '../../contexts/context';
-import { logDOM } from '@testing-library/react';
+import { userUpdateCompleted, userUpdateFailed } from '../../utils/constants';
 
-const Profile = ({ onEdit = () => {}, onSignOut }) => {
+const Profile = ({ onUpdateUser, onSignOut }) => {
   const currentUser = useContext(UserContext);
 
   const [isEditing, setEditing] = useState(false);
   const [formValue, setFormValue] = useState(currentUser);
-  const [isSuccessfulValidated, setSuccessfulValidated] = useState(true);
 
-  const [isAppropriateName, setIsAppropriateName] = useState(false);
-  const [isAppropriateEmail, setIsAppropriateEmail] = useState(false);
+  const [isUpdateCompleted, setIsUpdateCompleted] = useState(null);
 
-  const validationFailed = !isAppropriateName || !isAppropriateEmail;
+  useEffect(() => {
+    setFormValue(currentUser);
+  }, [currentUser]);
+
+  const [isSuccessfulValidated, setSuccessfulValidated] = useState(false);
+
+  const [validationError, setValidationError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    let validationResult;
-    if (name === 'email') {
-      console.log(value);
-      validationResult = validateEmail(value);
-      setIsAppropriateEmail(validationResult);
-    }
-    if (name === 'name') {
-      console.log(value);
-      validationResult = validateName(value);
-      setIsAppropriateName(validationResult);
-    }
 
     setFormValue({
       ...formValue,
       [name]: value,
     });
 
-    if (!validationResult) {
-      console.log('ошибочки');
+    const [validatedSuccessfully, errorCause] = profileValidate({ ...formValue, [name]: value }, currentUser);
+
+    setValidationError(errorCause);
+
+    if (!validatedSuccessfully) {
       setSuccessfulValidated(false);
       return;
     }
@@ -51,14 +45,22 @@ const Profile = ({ onEdit = () => {}, onSignOut }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (validate({ email: formValue.email, name: formValue.name })) {
+    if (
+      // validate({ email: formValue.email, name: formValue.name })
+      profileValidate({ email: formValue.email, name: formValue.name }, currentUser)
+    ) {
       setSuccessfulValidated(true);
-      onEdit(formValue.email, formValue.name);
+      onUpdateUser({ email: formValue.email, name: formValue.name }).then((res) =>
+        !res ? setIsUpdateCompleted(false) : setIsUpdateCompleted(true),
+      );
       setEditing(false);
     } else {
       setSuccessfulValidated(false);
     }
   };
+
+  const updateTipText =
+    isUpdateCompleted === true ? userUpdateCompleted : isUpdateCompleted === false ? userUpdateFailed : '';
 
   return (
     <main className="profile">
@@ -66,6 +68,12 @@ const Profile = ({ onEdit = () => {}, onSignOut }) => {
         <h1 className="profile__title">Привет, {currentUser?.name}!</h1>
 
         <form className="profile__form" id="profile-form" onSubmit={handleSubmit}>
+          <span
+            className={`profile__notification 
+            ${updateTipText === userUpdateFailed && 'profile__notification_state_error'}`}
+          >
+            {updateTipText}
+          </span>
           <div className="profile__container">
             <label className="profile__label" htmlFor="name">
               Имя
@@ -101,10 +109,10 @@ const Profile = ({ onEdit = () => {}, onSignOut }) => {
           <button
             form="profile-form"
             type="submit"
-            disabled={validationFailed || !isSuccessfulValidated}
-            className={`profile__save ${(validationFailed || !isSuccessfulValidated) && 'profile__save_state_error'}`}
+            disabled={(validationError || !isSuccessfulValidated) && true}
+            className={`profile__save ${(validationError || !isSuccessfulValidated) && 'profile__save_state_error'}`}
           >
-            {!isSuccessfulValidated && <span className="profile__error">При обновлении профиля произошла ошибка.</span>}
+            {!isSuccessfulValidated && <span className="profile__error">{validationError}</span>}
             Сохранить
           </button>
         )}

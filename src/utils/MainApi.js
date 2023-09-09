@@ -43,15 +43,15 @@ class MainApi {
   //   return this._getResponseData(response);
   // }
   //
-  // patchUser = async (newInfo) => {
-  //   const response = await fetch(this._baseUrl + '/users/me', {
-  //     method: 'PATCH',
-  //     headers: this._headers,
-  //     body: JSON.stringify(newInfo),
-  //   });
-  //
-  //   return this._getResponseData(response);
-  // };
+  patchUser = async (newInfo) => {
+    const response = await fetch(this._baseUrl + '/users/me', {
+      method: 'PATCH',
+      headers: { ...this._headers, authorization: `Bearer ${localStorage.getItem('token')}` },
+      body: JSON.stringify(newInfo),
+    });
+
+    return this._getResponseData(response);
+  };
   //
   // deleteCard = async (cardId) => {
   //   const response = await fetch(this._baseUrl + `/cards/${cardId}`, {
