@@ -12,8 +12,10 @@ import { UserContext } from '../contexts/context';
 import Profile from '../components/Profile/Profile';
 import NotFound from '../components/NotFound/NotFound';
 import mainApi from '../utils/MainApi';
+import SavedMovies from '../components/Movies/SavedMovies';
 
 const AppRouter = () => {
+  console.log('БЛЯ');
   const [isAuthRequestCompleted, setIsAuthRequestCompleted] = useState(false);
 
   const [currentEmail, setCurrentEmail] = useState('');
@@ -26,35 +28,33 @@ const AppRouter = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    function handleTokenCheck() {
-      const token = localStorage.getItem('token');
-      if (token) {
-        authApi
-          .checkToken(token)
-          .then((data) => {
-            if (data) {
-              setIsLoggedIn(true);
-              setCurrentUser(data);
-              setIsAuthRequestCompleted(true);
-              if (pathname === '/sign-in' || pathname === '/sign-up') {
-                navigate('/movies', { replace: true });
+  useEffect(
+    () => {
+      function handleTokenCheck() {
+        const token = localStorage.getItem('token');
+        if (token) {
+          authApi
+            .checkToken(token)
+            .then((data) => {
+              if (data) {
+                setIsLoggedIn(true);
+                setCurrentUser(data);
+                setIsAuthRequestCompleted(true);
+                // if (pathname === '/sign-in' || pathname === '/sign-up') {
+                //   navigate('/movies', { replace: true });
+                // }
               }
-            }
-          })
-          .catch((err) => console.log(`Ошибка.....: ${err}`));
+            })
+            .catch((err) => console.log(`Ошибка.....: ${err}`));
+        }
       }
-    }
 
-    handleTokenCheck();
-  }, [navigate]);
-
-  // const [currentEmail, setCurrentEmail] = useState('');
-  //
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
-  // const [isAuthError, setIsAuthError] = useState(null);
-  // const [isRegisterError, setIsRegisterError] = useState(null);
+      handleTokenCheck();
+    },
+    [
+      // navigate
+    ],
+  );
 
   const onRegister = () => {
     navigate('/movies', { replace: true });
@@ -109,7 +109,9 @@ const AppRouter = () => {
 
   function handleSignOut() {
     localStorage.removeItem('token');
+    localStorage.removeItem('movies');
     setCurrentUser(null);
+    navigate('/', { replace: true }); // проверить как отрабатывает
   }
 
   function handleUpdateUser(updatedInfo) {
@@ -130,7 +132,7 @@ const AppRouter = () => {
           <Route path="/" element={<Main />} />
 
           <Route path="/movies" element={<ProtectedRoute loggedIn={isLoggedIn} element={Movies} />} />
-          <Route path="/saved-movies" element={<ProtectedRoute loggedIn={isLoggedIn} saved element={Movies} />} />
+          <Route path="/saved-movies" element={<ProtectedRoute loggedIn={isLoggedIn} saved element={SavedMovies} />} />
 
           <Route
             path="/profile"
@@ -149,14 +151,7 @@ const AppRouter = () => {
           <Route path="/404" element={<NotFound />} />
           <Route path="*" element={<Navigate to="404" replace />} />
 
-          <Route
-            path="*"
-            element={
-              <NotFound
-              // handleLogin={handleLogin} setUserEmail={setCurrentEmail} handleRegister={handleRegister}
-              />
-            }
-          />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </UserContext.Provider>
     )

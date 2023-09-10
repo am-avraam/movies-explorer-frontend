@@ -12,9 +12,9 @@ class MainApi {
     return res.json();
   }
 
-  getMovies = async () => {
-    const response = await fetch(this._baseUrl, {
-      headers: this._headers,
+  getSavedMovies = async () => {
+    const response = await fetch(this._baseUrl + '/movies', {
+      headers: { ...this._headers, authorization: `Bearer ${localStorage.getItem('token')}` },
     });
 
     return this._getResponseData(response);
@@ -33,15 +33,15 @@ class MainApi {
   //   return this._getResponseData(response);
   // }
   //
-  // async postCard(data) {
-  //   const response = await fetch(this._baseUrl + '/cards', {
-  //     method: 'POST',
-  //     headers: this._headers,
-  //     body: JSON.stringify(data),
-  //   });
-  //
-  //   return this._getResponseData(response);
-  // }
+  async postMovie(data) {
+    const response = await fetch(this._baseUrl + '/movies', {
+      method: 'POST',
+      headers: { ...this._headers, authorization: `Bearer ${localStorage.getItem('token')}` },
+      body: JSON.stringify(data),
+    });
+
+    return this._getResponseData(response);
+  }
   //
   patchUser = async (newInfo) => {
     const response = await fetch(this._baseUrl + '/users/me', {
@@ -52,15 +52,15 @@ class MainApi {
 
     return this._getResponseData(response);
   };
-  //
-  // deleteCard = async (cardId) => {
-  //   const response = await fetch(this._baseUrl + `/cards/${cardId}`, {
-  //     method: 'DELETE',
-  //     headers: this._headers,
-  //   });
-  //
-  //   return this._getResponseData(response);
-  // };
+
+  deleteMovie = async (movieId) => {
+    const response = await fetch(this._baseUrl + `/movies/${movieId}`, {
+      method: 'DELETE',
+      headers: { ...this._headers, authorization: `Bearer ${localStorage.getItem('token')}` },
+    });
+
+    return this._getResponseData(response);
+  };
   //
   // changeLikeCardStatus = async (cardId, status) => {
   //   const response = await fetch(this._baseUrl + `/cards/${cardId}/likes`, {

@@ -3,29 +3,28 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import { films } from './constants';
 import './MoviesCardList.css';
 
-const MoviesCardList = forwardRef(({ saved, isShortened, movies, children }, ref) => {
+const MoviesCardList = forwardRef(({ saved, isShortened, movies, children, onMovieLike, onMovieDelete }, ref) => {
   return (
     <>
-      {children}
-      <ul className="movies__list" ref={ref}>
-        {isShortened &&
-          films
-            .filter((film) => film.shortened)
-            .map((film) => <MoviesCard saved={saved} key={film.name + Math.random()} film={film} />)}
-        {!isShortened &&
-          movies.map(({ duration, nameRU, trailerLink, image: { url } }) => {
-            return (
-              <MoviesCard
-                saved={saved}
-                key={nameRU + duration}
-                duration={duration}
-                nameRU={nameRU}
-                trailerLink={trailerLink}
-                url={url}
-              />
-            );
-          })}
-      </ul>
+      {!movies.length && <ul className="movies__list" ref={ref}></ul>}
+      {movies.length && (
+        <>
+          {children}
+          <ul className="movies__list" ref={ref}>
+            {movies?.map((movie) => {
+              return (
+                <MoviesCard
+                  key={movie.nameRU + movie.duration}
+                  onMovieLike={onMovieLike}
+                  onMovieDelete={onMovieDelete}
+                  saved={saved}
+                  data={movie}
+                />
+              );
+            })}
+          </ul>
+        </>
+      )}
     </>
   );
 });

@@ -7,6 +7,10 @@ import Preloader from './Preloader/Preloader';
 import movieApi from '../../utils/MoviesApi';
 import getColumnCount from '../../utils/getColumnCount';
 import filterListByQuery from '../../utils/filterListByQuery';
+import mainApi from '../../utils/MainApi';
+import { extractDataFromMovie } from '../../utils/extractDataFromMovie';
+import { filterListByDuration } from '../../utils/filterListByDuration';
+import { logDOM } from '@testing-library/react';
 
 const Movies = ({ saved }) => {
   const [showingShortened, setShowingShortened] = useState(false);
@@ -19,7 +23,8 @@ const Movies = ({ saved }) => {
 
   const [movieQuery, setMovieQuery] = useState('');
 
-  const [moviesList, setMoviesList] = useState([]);
+  const [moviesListGeneral, setMoviesListGeneral] = useState([]);
+  const [moviesListByQuery, setMoviesListByQuery] = useState([]);
   const [moviesListToShow, setMoviesListToShow] = useState([]);
 
   const moviesListRef = useRef();
@@ -27,7 +32,21 @@ const Movies = ({ saved }) => {
     setShowingShortened((state) => !state);
   }
 
-  const getQuery = (query) => {
+  // const getAllMoviesList = () => {
+  //   return movieApi
+  //     .getMovies()
+  //     .then((movies) => {
+  //       const moviesListPrepared = movies.map((oldData) => extractDataFromMovie(oldData));
+  //       setMoviesListGeneral(moviesListPrepared);
+  //       return moviesListPrepared;
+  //     })
+  //     .catch((err) => {
+  //       setIsError(true);
+  //       console.log(`Ошибка.....: ${err}`);
+  //     });
+  // };
+
+  const getMovieListByQuery = (query) => {
     setIsEmpty(false);
     setMovieQuery(query);
     const currentColumnCount = getColumnCount(moviesListRef.current);
@@ -37,7 +56,9 @@ const Movies = ({ saved }) => {
     movieApi
       .getMovies(query)
       .then((movies) => {
-        const entireFilteredList = filterListByQuery(movies, query);
+        let entireFilteredList = filterListByQuery(movies, query);
+
+        if (showingShortened) entireFilteredList = filterListByDuration(entireFilteredList);
 
         if (entireFilteredList.length === 0) {
           setIsLoading(false);
@@ -47,14 +68,15 @@ const Movies = ({ saved }) => {
           return;
         }
 
-        console.log(entireFilteredList[0]);
-        setMoviesList(entireFilteredList);
+        const entireFilteredListReorganized = entireFilteredList.map((oldData) => extractDataFromMovie(oldData));
 
-        if (entireFilteredList.length > currentColumnCount * 4) {
+        setMoviesListByQuery(entireFilteredListReorganized);
+
+        if (entireFilteredListReorganized.length > currentColumnCount * 4) {
           setIsBigAmount(true);
-          setMoviesListToShow(entireFilteredList.slice(0, currentColumnCount * 4));
+          setMoviesListToShow(entireFilteredListReorganized.slice(0, currentColumnCount * 4));
         } else {
-          setMoviesListToShow(entireFilteredList);
+          setMoviesListToShow(entireFilteredListReorganized);
           setIsBigAmount(false);
         }
 
@@ -68,13 +90,22 @@ const Movies = ({ saved }) => {
 
   const onShowMore = () => {
     const nextListCount = moviesListToShow.length + getColumnCount(moviesListRef.current) * 4;
-    if (nextListCount >= moviesList.length) {
+    if (nextListCount >= moviesListByQuery.length) {
       setIsBigAmount(false);
     }
-    setMoviesListToShow(moviesList.slice(0, nextListCount));
+    setMoviesListToShow(moviesListByQuery.slice(0, nextListCount));
   };
 
-  function handleMovieLike(card) {
+  function handleMovieLike(movie) {
+    mainApi.postMovie(movie).then(({ data: savedMovie }) => {
+      setMoviesListByQuery((prev) => {
+        console.log(prev);
+        return prev.map((m) => {
+          return m.movieId === movie.movieId ? savedMovie : m;
+        });
+      });
+    });
+
     // const isLiked = card.likes.some(i => i._id === currentUser._id);
     //
     // // Отправляем запрос в API и получаем обновлённые данные карточки
@@ -85,8 +116,11 @@ const Movies = ({ saved }) => {
     //   .catch((err) => console.log(`Ошибка.....: ${err}`))
   }
 
+  // useEffect(() => {
+  //   if (!moviesListGeneral.length) getAllMoviesList();
+  // }, [moviesListGeneral.length]);
+
   useEffect(() => {
-    //   localStorage.removeItem('movies'); // вызывать при выходе пользователя
     movieQuery && localStorage.setItem('movies', JSON.stringify({ moviesListToShow, movieQuery, showingShortened }));
   }, [moviesListToShow, movieQuery, showingShortened]);
 
@@ -108,7 +142,7 @@ const Movies = ({ saved }) => {
         <div className="movies__main">
           <SearchForm
             movieQuery={movieQuery}
-            onQuery={getQuery}
+            onQuery={getMovieListByQuery}
             onCheck={onCheckShortened}
             isShortened={showingShortened}
           />
