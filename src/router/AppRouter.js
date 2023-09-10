@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Route, Routes, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import { ProtectedRouteElement as ProtectedRoute } from './ProtectedRoute';
 import Main from './../components/Main/Main';
 import Movies from './../components/Movies/Movies';
@@ -17,14 +17,10 @@ import mainApi from '../utils/MainApi';
 import SavedMovies from '../components/Movies/SavedMovies';
 import movieApi from '../utils/MoviesApi';
 import { extractDataFromMovie } from '../utils/extractDataFromMovie';
-import { logDOM } from '@testing-library/react';
 
 const AppRouter = () => {
-  console.log('БЛЯ');
-
   const [isAuthRequestCompleted, setIsAuthRequestCompleted] = useState(false);
-  //
-  //
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [moviesListGeneral, setMoviesListGeneral] = useState([]);
@@ -36,94 +32,64 @@ const AppRouter = () => {
   const [isSavedMovieQueryError, setIsSavedMovieQueryError] = useState(null);
   // eslint-disable-next-line no-unused-vars
   const navigate = useNavigate();
-  // const { pathname } = useLocation();
+
+  const getAllMoviesList = () => {
+    return movieApi
+      .getMovies()
+      .then((movies) => {
+        return movies.map((oldData) => extractDataFromMovie(oldData));
+      })
+      .catch((err) => {
+        setIsMovieQueryError(true);
+        console.log(`Ошибка.....: ${err}`);
+      });
+  };
+
+  const getSavedMovies = () => {
+    return mainApi
+      .getSavedMovies()
+      .then(({ data: savedMovies }) => {
+        setSavedMoviesList(savedMovies);
+        return savedMovies;
+      })
+      .catch((err) => {
+        setIsSavedMovieQueryError(true);
+        console.log(`Ошибка.....: ${err}`);
+      });
+  };
+  function handleTokenCheck() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      authApi
+        .checkToken(token)
+        .then((data) => {
+          if (data) {
+            getSavedMovies().then((savedMovies) => {
+              getAllMoviesList().then((moviesListPrepared) => {
+                const savedMoviesMap = new Map();
+                savedMovies.forEach((movie) => savedMoviesMap.set(movie.movieId, movie));
+
+                const moviesListWithLikeSign = moviesListPrepared.map((movie) => {
+                  return savedMoviesMap.has(movie.movieId) ? savedMoviesMap.get(movie.movieId) : movie;
+                });
+
+                setCurrentUser(data);
+                setIsAuthRequestCompleted(true);
+                setIsLoggedIn(true);
+
+                setMoviesListGeneral(moviesListWithLikeSign);
+              });
+            });
+          }
+        })
+        .catch((err) => console.log(`Ошибка.....: ${err}`));
+    } else {
+      setIsAuthRequestCompleted(true);
+    }
+    // setIsAuthRequestCompleted(true); // - пиздец хуйня
+  }
 
   useEffect(() => {
-    // function handleTokenCheck() {
-    //   const token = localStorage.getItem('token');
-    //   if (token) {
-    //     authApi
-    //       .checkToken(token)
-    //       .then((data) => {
-    //         if (data) {
-    //           setIsLoggedIn(true);
-    //           setCurrentUser(data);
-    //           setIsAuthRequestCompleted(true);
-    //           // if (pathname === '/sign-in' || pathname === '/sign-up') {
-    //           //   navigate('/movies', { replace: true });
-    //           // }
-    //         }
-    //       })
-    //       .catch((err) => console.log(`Ошибка.....: ${err}`));
-    //   }
-    // }
-    //
-    // handleTokenCheck();
-
-    console.log('эффект');
-
-    const getSavedMovies = () => {
-      return mainApi
-        .getSavedMovies()
-        .then(({ data: savedMovies }) => {
-          console.log(savedMovies);
-          setSavedMoviesList(savedMovies);
-          return savedMovies;
-        })
-        .catch((err) => {
-          setIsSavedMovieQueryError(true);
-          console.log(`Ошибка.....: ${err}`);
-        });
-    };
-
-    const getAllMoviesList = () => {
-      return movieApi
-        .getMovies()
-        .then((movies) => {
-          return movies.map((oldData) => extractDataFromMovie(oldData));
-        })
-        .catch((err) => {
-          setIsMovieQueryError(true);
-          console.log(`Ошибка.....: ${err}`);
-        });
-    };
-    function handleTokenCheck() {
-      const token = localStorage.getItem('token');
-      if (token) {
-        authApi
-          .checkToken(token)
-          .then((data) => {
-            if (data) {
-              getSavedMovies().then((savedMovies) => {
-                getAllMoviesList().then((moviesListPrepared) => {
-                  const savedMoviesMap = new Map();
-                  savedMovies.forEach((movie) => savedMoviesMap.set(movie.movieId, movie));
-
-                  const moviesListWithLikeSign = moviesListPrepared.map((movie) => {
-                    return savedMoviesMap.has(movie.movieId) ? savedMoviesMap.get(movie.movieId) : movie;
-                  });
-
-                  console.log(moviesListWithLikeSign);
-                  setCurrentUser(data);
-                  setIsAuthRequestCompleted(true);
-                  setIsLoggedIn(true);
-                  // setMoviesListGeneral(moviesListPrepared);
-                  setMoviesListGeneral(moviesListWithLikeSign);
-                });
-              });
-              // getAllMoviesList().then((moviesListPrepared) => {
-              //   setCurrentUser(data);
-              //   setIsAuthRequestCompleted(true);
-              //   setIsLoggedIn(true);
-              //   setMoviesListGeneral(moviesListPrepared);
-              // });
-              // getSavedMovies();
-            }
-          })
-          .catch((err) => console.log(`Ошибка.....: ${err}`));
-      }
-    }
-
     handleTokenCheck();
   }, []);
 
@@ -148,11 +114,13 @@ const AppRouter = () => {
       });
   }
   //
-  function handleRegistrationQuery(email, password) {
+  function handleRegistrationQuery(data) {
     authApi
-      .register(email, password)
+      .register(data)
       .then((res) => {
         if (res.data) {
+          handleAuthorization(data.email, data.password).then(() => handleTokenCheck());
+          getAllMoviesList().then((allMovies) => setMoviesListGeneral(allMovies));
           setIsLoggedIn(true);
           navigate('/movies', { replace: true });
           setCurrentUser(res.data);
@@ -163,6 +131,7 @@ const AppRouter = () => {
           setIsRegisterError('Что-то пошло не так. Попробуйте другие данные.');
         }
       })
+
       .catch((err) => {
         setIsRegisterError('Регистрация не успешна. Попробуйте еще раз.');
         console.log(`Ошибка.....: ${err}`);
@@ -173,7 +142,7 @@ const AppRouter = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('movies');
     setCurrentUser(null);
-    navigate('/', { replace: true }); // проверить как отрабатывает
+    navigate('/', { replace: true });
   }
 
   function handleUpdateUser(updatedInfo) {
@@ -188,41 +157,39 @@ const AppRouter = () => {
 
   function handleMovieLike(movie) {
     if (!movie._id) {
-      mainApi.postMovie(movie).then(({ data: savedMovie }) => {
-        setMoviesListGeneral((prev) => prev.map((m) => (m.movieId === movie.movieId ? savedMovie : m)));
-        setSavedMoviesList((prev) => {
-          prev.push(savedMovie);
-          return prev;
-        });
-      });
+      mainApi
+        .postMovie(movie)
+        .then(({ data: savedMovie }) => {
+          setMoviesListGeneral((prev) => prev.map((m) => (m.movieId === movie.movieId ? savedMovie : m)));
+          setSavedMoviesList((prev) => {
+            prev.push(savedMovie);
+            return prev;
+          });
+        })
+        .catch((err) => console.log(`Ошибка.....: ${err}`));
     } else {
-      mainApi.deleteMovie(movie._id).then(({ data: savedMovie }) => {
-        delete savedMovie._id;
-        delete savedMovie.owner;
-        setMoviesListGeneral((prev) => prev.map((m) => (m.movieId === movie.movieId ? savedMovie : m)));
-      });
+      mainApi
+        .deleteMovie(movie._id)
+        .then(({ data: savedMovie }) => {
+          delete savedMovie._id;
+          delete savedMovie.owner;
+          setMoviesListGeneral((prev) => prev.map((m) => (m.movieId === movie.movieId ? savedMovie : m)));
+          setSavedMoviesList((prev) => prev.filter((m) => m._id !== movie._id));
+        })
+        .catch((err) => console.log(`Ошибка.....: ${err}`));
     }
   }
 
   function handleDeleteMovie(id) {
-    // if (!movie._id) {
-    //   mainApi.postMovie(movie).then(({ data: savedMovie }) => {
-    //     setMoviesListGeneral((prev) => prev.map((m) => (m.movieId === movie.movieId ? savedMovie : m)));
-    //   });
-    // } else {
-    //   mainApi.deleteMovie(movie._id).then(({ data: savedMovie }) => {
-    //     delete savedMovie._id;
-    //     delete savedMovie.owner;
-    //     setMoviesListGeneral((prev) => prev.map((m) => (m.movieId === movie.movieId ? savedMovie : m)));
-    //   });
-    // }
-
-    mainApi.deleteMovie(id).then(({ data: deletedMovie }) => {
-      delete deletedMovie._id;
-      delete deletedMovie.owner;
-      setMoviesListGeneral((prev) => prev.map((m) => (m._id === id ? deletedMovie : m)));
-      setSavedMoviesList((prev) => prev.filter((m) => m._id !== id));
-    });
+    mainApi
+      .deleteMovie(id)
+      .then(({ data: deletedMovie }) => {
+        delete deletedMovie._id;
+        delete deletedMovie.owner;
+        setMoviesListGeneral((prev) => prev.map((m) => (m._id === id ? deletedMovie : m)));
+        setSavedMoviesList((prev) => prev.filter((m) => m._id !== id));
+      })
+      .catch((err) => console.log(`Ошибка.....: ${err}`));
   }
 
   return (

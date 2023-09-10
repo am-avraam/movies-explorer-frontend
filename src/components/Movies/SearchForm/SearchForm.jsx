@@ -10,7 +10,6 @@ const SearchForm = ({ onCheck, onQuery, isShortened, movieQuery }) => {
     if (queryRef.current?.value.length) {
       onQuery(queryRef.current?.value);
       setIsEmptyQuery(false);
-      // queryRef.current.value = '';
     } else {
       setIsEmptyQuery(true);
     }

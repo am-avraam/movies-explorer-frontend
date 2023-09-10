@@ -21,6 +21,23 @@
     cursor: pointer;
 }
 
+.movies__action {
+    right: 0;
+    top: 161px;
+}
+
+@media (max-width: 767px) {
+    .movies__action {
+        top: 178px;
+    }
+}
+
+@media (max-width: 1279px) {
+    .movies__action {
+        top: 200px;
+    }
+}
+
 .movies__like:hover, .movies__like:active {
     opacity: .8;
 }
@@ -33,7 +50,10 @@
     background: url('../../../images/activeLike.svg') no-repeat;
 
 }
+
+
 .movies__card {
+    position: relative;
     width: 100%;
 }
 
@@ -115,4 +135,9 @@
         font-size: 10px;
         line-height: 12px;
     }
+}
+
+.movies__trailer {
+    text-decoration: none;
+    color: inherit;
 }

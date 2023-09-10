@@ -7,13 +7,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { SideMenu } from '../SideMenu/SideMenu';
 
 const exceptions = new Set(['/sign-in', '/sign-up', '/404']);
-const loggedPages = new Set(['/saved-movies', '/movies', '/profile']);
 
 function Header() {
   const { pathname } = useLocation();
   const isLanding = pathname === '/';
-
-  // const isLoggedIn = loggedPages.has(pathname);
 
   const isLoggedIn = useContext(UserContext);
 
@@ -32,12 +29,7 @@ function Header() {
 
   return (
     <>
-      <SideMenu
-        handleEscClose={handleEscClose}
-        onUpdateAvatar={() => {}}
-        isOpen={isSideMenuOpen}
-        onClose={() => setSideMenuOpen(false)}
-      />
+      <SideMenu handleEscClose={handleEscClose} isOpen={isSideMenuOpen} onClose={() => setSideMenuOpen(false)} />
       <header className={`header ${isLanding && 'header__landing'}`}>
         <div className="header__container">
           <div className="header__wrapper">

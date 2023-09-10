@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { initFormState } from '../../utils/constants';
 import '../Login/Login.css';
 import logo from '../../images/logo.svg';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { UserContext } from '../../contexts/UserContext';
+
 import { validate, validateEmail, validateName, validatePassword } from 'utils/validation';
 export const Register = ({ onRegister, error }) => {
+  const currentUser = useContext(UserContext);
   const [formValue, setFormValue] = useState(initFormState);
   const [isSuccessfulValidated, setSuccessfulValidated] = useState(true);
 
   const [isAppropriateName, setIsAppropriateName] = useState(false);
   const [isAppropriateEmail, setIsAppropriateEmail] = useState(false);
   const [isAppropriatePassword, setIsAppropriatePassword] = useState(false);
+
+  if (currentUser) return <Navigate to="/" replace />;
 
   const validationFailed = !isAppropriateName || !isAppropriateEmail || !isAppropriatePassword;
   const handleSubmit = (e) => {

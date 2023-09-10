@@ -13,8 +13,6 @@ import { filterListByDuration } from '../../utils/filterListByDuration';
 const SavedMovies = ({ onMovieDelete }) => {
   const savedMoviesList = useContext(SavedMoviesContext);
 
-  console.log(savedMoviesList);
-
   const [showingShortened, setShowingShortened] = useState(false);
 
   const [isEmpty, setIsEmpty] = useState(false);

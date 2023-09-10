@@ -4,11 +4,8 @@ import SearchForm from './SearchForm/SearchForm';
 import MoviesCardList from './MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import Preloader from './Preloader/Preloader';
-import movieApi from '../../utils/MoviesApi';
 import getColumnCount from '../../utils/getColumnCount';
 import filterListByQuery from '../../utils/filterListByQuery';
-import mainApi from '../../utils/MainApi';
-import { extractDataFromMovie } from '../../utils/extractDataFromMovie';
 import { filterListByDuration } from '../../utils/filterListByDuration';
 import { AllMoviesContext } from '../../contexts/AllMoviesContext';
 import { SavedMoviesContext } from '../../contexts/SavedMoviesContext';
@@ -37,6 +34,9 @@ const Movies = ({ saved, onMovieLike }) => {
 
   useEffect(() => {
     const filterList = () => {
+      if (!movieQuery) {
+        return;
+      }
       setIsEmpty(false);
 
       const currentColumnCount = getColumnCount(moviesListRef.current);
@@ -44,12 +44,14 @@ const Movies = ({ saved, onMovieLike }) => {
       setIsLoading(true);
 
       let entireFilteredList = filterListByQuery(allMoviesList, movieQuery);
+      console.log(entireFilteredList);
       if (showingShortened) entireFilteredList = filterListByDuration(entireFilteredList);
 
       if (entireFilteredList.length === 0) {
         setIsLoading(false);
         setIsEmpty(true);
         setMoviesListToShow([]);
+        setIsBigAmount(false);
         setIsError(false);
         return;
       }
@@ -70,20 +72,6 @@ const Movies = ({ saved, onMovieLike }) => {
     filterList();
   }, [showingShortened, allMoviesList, movieQuery, savedMovieList]);
 
-  // const getAllMoviesList = () => {
-  //   return movieApi
-  //     .getMovies()
-  //     .then((movies) => {
-  //       const moviesListPrepared = movies.map((oldData) => extractDataFromMovie(oldData));
-  //       setMoviesListGeneral(moviesListPrepared);
-  //       return moviesListPrepared;
-  //     })
-  //     .catch((err) => {
-  //       setIsError(true);
-  //       console.log(`Ошибка.....: ${err}`);
-  //     });
-  // };
-
   const getMovieListByQuery = (query) => {
     setIsEmpty(false);
     setMovieQuery(query);
@@ -95,6 +83,7 @@ const Movies = ({ saved, onMovieLike }) => {
     if (showingShortened) entireFilteredList = filterListByDuration(entireFilteredList);
 
     if (entireFilteredList.length === 0) {
+      setIsBigAmount(false);
       setIsLoading(false);
       setIsEmpty(true);
       setMoviesListToShow([]);
