@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { UserContext } from '../../contexts/context';
+import { UserContext } from '../../contexts/UserContext';
 
 import logo from '../../images/logo.svg';
 import './Header.css';

@@ -3,7 +3,7 @@ import './../Login/Login.css';
 import './Profile.css';
 import { Link } from 'react-router-dom';
 import { profileValidate } from '../../utils/validation';
-import { UserContext } from '../../contexts/context';
+import { UserContext } from '../../contexts/UserContext';
 import { userUpdateCompleted, userUpdateFailed } from '../../utils/constants';
 
 const Profile = ({ onUpdateUser, onSignOut }) => {

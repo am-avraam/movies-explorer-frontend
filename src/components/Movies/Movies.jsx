@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import './Movies.css';
 import SearchForm from './SearchForm/SearchForm';
 import MoviesCardList from './MoviesCardList/MoviesCardList';
@@ -10,9 +10,13 @@ import filterListByQuery from '../../utils/filterListByQuery';
 import mainApi from '../../utils/MainApi';
 import { extractDataFromMovie } from '../../utils/extractDataFromMovie';
 import { filterListByDuration } from '../../utils/filterListByDuration';
-import { logDOM } from '@testing-library/react';
+import { AllMoviesContext } from '../../contexts/AllMoviesContext';
+import { SavedMoviesContext } from '../../contexts/SavedMoviesContext';
 
-const Movies = ({ saved }) => {
+const Movies = ({ saved, onMovieLike }) => {
+  const allMoviesList = useContext(AllMoviesContext);
+  const savedMovieList = useContext(SavedMoviesContext);
+
   const [showingShortened, setShowingShortened] = useState(false);
 
   const [isEmpty, setIsEmpty] = useState(false);
@@ -23,7 +27,6 @@ const Movies = ({ saved }) => {
 
   const [movieQuery, setMovieQuery] = useState('');
 
-  const [moviesListGeneral, setMoviesListGeneral] = useState([]);
   const [moviesListByQuery, setMoviesListByQuery] = useState([]);
   const [moviesListToShow, setMoviesListToShow] = useState([]);
 
@@ -31,6 +34,41 @@ const Movies = ({ saved }) => {
   function onCheckShortened() {
     setShowingShortened((state) => !state);
   }
+
+  useEffect(() => {
+    const filterList = () => {
+      setIsEmpty(false);
+
+      const currentColumnCount = getColumnCount(moviesListRef.current);
+
+      setIsLoading(true);
+
+      let entireFilteredList = filterListByQuery(allMoviesList, movieQuery);
+      if (showingShortened) entireFilteredList = filterListByDuration(entireFilteredList);
+
+      if (entireFilteredList.length === 0) {
+        setIsLoading(false);
+        setIsEmpty(true);
+        setMoviesListToShow([]);
+        setIsError(false);
+        return;
+      }
+
+      setMoviesListByQuery(entireFilteredList);
+
+      if (entireFilteredList.length > currentColumnCount * 4) {
+        setIsBigAmount(true);
+        setMoviesListToShow(entireFilteredList.slice(0, currentColumnCount * 4));
+      } else {
+        setMoviesListToShow(entireFilteredList);
+        setIsBigAmount(false);
+      }
+
+      setIsLoading(false);
+    };
+
+    filterList();
+  }, [showingShortened, allMoviesList, movieQuery, savedMovieList]);
 
   // const getAllMoviesList = () => {
   //   return movieApi
@@ -53,39 +91,28 @@ const Movies = ({ saved }) => {
 
     setIsLoading(true);
 
-    movieApi
-      .getMovies(query)
-      .then((movies) => {
-        let entireFilteredList = filterListByQuery(movies, query);
+    let entireFilteredList = filterListByQuery(allMoviesList, query);
+    if (showingShortened) entireFilteredList = filterListByDuration(entireFilteredList);
 
-        if (showingShortened) entireFilteredList = filterListByDuration(entireFilteredList);
+    if (entireFilteredList.length === 0) {
+      setIsLoading(false);
+      setIsEmpty(true);
+      setMoviesListToShow([]);
+      setIsError(false);
+      return;
+    }
 
-        if (entireFilteredList.length === 0) {
-          setIsLoading(false);
-          setIsEmpty(true);
-          setMoviesListToShow([]);
-          setIsError(false);
-          return;
-        }
+    setMoviesListByQuery(entireFilteredList);
 
-        const entireFilteredListReorganized = entireFilteredList.map((oldData) => extractDataFromMovie(oldData));
+    if (entireFilteredList.length > currentColumnCount * 4) {
+      setIsBigAmount(true);
+      setMoviesListToShow(entireFilteredList.slice(0, currentColumnCount * 4));
+    } else {
+      setMoviesListToShow(entireFilteredList);
+      setIsBigAmount(false);
+    }
 
-        setMoviesListByQuery(entireFilteredListReorganized);
-
-        if (entireFilteredListReorganized.length > currentColumnCount * 4) {
-          setIsBigAmount(true);
-          setMoviesListToShow(entireFilteredListReorganized.slice(0, currentColumnCount * 4));
-        } else {
-          setMoviesListToShow(entireFilteredListReorganized);
-          setIsBigAmount(false);
-        }
-
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsError(true);
-        console.log(`Ошибка.....: ${err}`);
-      });
+    setIsLoading(false);
   };
 
   const onShowMore = () => {
@@ -95,30 +122,6 @@ const Movies = ({ saved }) => {
     }
     setMoviesListToShow(moviesListByQuery.slice(0, nextListCount));
   };
-
-  function handleMovieLike(movie) {
-    mainApi.postMovie(movie).then(({ data: savedMovie }) => {
-      setMoviesListByQuery((prev) => {
-        console.log(prev);
-        return prev.map((m) => {
-          return m.movieId === movie.movieId ? savedMovie : m;
-        });
-      });
-    });
-
-    // const isLiked = card.likes.some(i => i._id === currentUser._id);
-    //
-    // // Отправляем запрос в API и получаем обновлённые данные карточки
-    // api.changeLikeCardStatus(card._id, !isLiked)
-    //   .then((newCard) => {
-    //     setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-    //   })
-    //   .catch((err) => console.log(`Ошибка.....: ${err}`))
-  }
-
-  // useEffect(() => {
-  //   if (!moviesListGeneral.length) getAllMoviesList();
-  // }, [moviesListGeneral.length]);
 
   useEffect(() => {
     movieQuery && localStorage.setItem('movies', JSON.stringify({ moviesListToShow, movieQuery, showingShortened }));
@@ -148,7 +151,7 @@ const Movies = ({ saved }) => {
           />
 
           <MoviesCardList
-            onMovieLike={handleMovieLike}
+            onMovieLike={onMovieLike}
             movies={moviesListToShow}
             ref={moviesListRef}
             saved={saved}

@@ -2,9 +2,8 @@ import React from 'react';
 import './MoviesCard.css';
 import convertDuration from '../../../utils/convertDuration';
 
-const MoviesCard = ({ data, onMovieLike, onMovieDelete, saved, like = false }) => {
+const MoviesCard = ({ data, onMovieLike, onMovieDelete, saved }) => {
   const isLiked = !!data._id;
-  console.log(isLiked);
   const cardLikeButtonClassName = saved ? 'movies__remove' : `movies__like ${isLiked && 'movies__like_state_active'}`;
 
   const handleLikeClick = (movieData) => {

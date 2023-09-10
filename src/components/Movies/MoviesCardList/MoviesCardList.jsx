@@ -6,25 +6,25 @@ import './MoviesCardList.css';
 const MoviesCardList = forwardRef(({ saved, isShortened, movies, children, onMovieLike, onMovieDelete }, ref) => {
   return (
     <>
-      {!movies.length && <ul className="movies__list" ref={ref}></ul>}
-      {movies.length && (
-        <>
-          {children}
-          <ul className="movies__list" ref={ref}>
-            {movies?.map((movie) => {
-              return (
-                <MoviesCard
-                  key={movie.nameRU + movie.duration}
-                  onMovieLike={onMovieLike}
-                  onMovieDelete={onMovieDelete}
-                  saved={saved}
-                  data={movie}
-                />
-              );
-            })}
-          </ul>
-        </>
-      )}
+      {/*{!movies.length && <ul className="movies__list" ref={ref}></ul>}*/}
+      {/*{movies.length && (*/}
+      <>
+        {children}
+        <ul className="movies__list" ref={ref}>
+          {movies?.map((movie) => {
+            return (
+              <MoviesCard
+                key={movie.nameRU + movie.duration}
+                onMovieLike={onMovieLike}
+                onMovieDelete={onMovieDelete}
+                saved={saved}
+                data={movie}
+              />
+            );
+          })}
+        </ul>
+      </>
+      {/*)}*/}
     </>
   );
 });
