@@ -108,6 +108,7 @@ const AppRouter = () => {
           setIsAuthError('Введенные данные не корректны');
         }
       })
+      .then(() => handleTokenCheck())
       .catch((err) => {
         setIsAuthError('Не удалось авторизоваться. Попробуйте еще раз.');
         console.log(`Ошибка.....: ${err}`);

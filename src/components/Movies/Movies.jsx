@@ -44,7 +44,6 @@ const Movies = ({ saved, onMovieLike }) => {
       setIsLoading(true);
 
       let entireFilteredList = filterListByQuery(allMoviesList, movieQuery);
-      console.log(entireFilteredList);
       if (showingShortened) entireFilteredList = filterListByDuration(entireFilteredList);
 
       if (entireFilteredList.length === 0) {
