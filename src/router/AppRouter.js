@@ -86,7 +86,6 @@ const AppRouter = () => {
     } else {
       setIsAuthRequestCompleted(true);
     }
-    // setIsAuthRequestCompleted(true); // - пиздец хуйня
   }
 
   useEffect(() => {
@@ -114,7 +113,7 @@ const AppRouter = () => {
         console.log(`Ошибка.....: ${err}`);
       });
   }
-  //
+
   function handleRegistrationQuery(data) {
     authApi
       .register(data)

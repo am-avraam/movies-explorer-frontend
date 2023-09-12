@@ -26,6 +26,7 @@ const Movies = ({ saved, onMovieLike }) => {
 
   const [moviesListByQuery, setMoviesListByQuery] = useState([]);
   const [moviesListToShow, setMoviesListToShow] = useState([]);
+  const [listCount, setListCount] = useState(0);
 
   const moviesListRef = useRef();
   function onCheckShortened() {
@@ -58,8 +59,11 @@ const Movies = ({ saved, onMovieLike }) => {
       setMoviesListByQuery(entireFilteredList);
 
       if (entireFilteredList.length > currentColumnCount * 4) {
-        setIsBigAmount(true);
-        setMoviesListToShow(entireFilteredList.slice(0, currentColumnCount * 4));
+        entireFilteredList.length > listCount && setIsBigAmount(true);
+
+        const currentListCount = listCount || currentColumnCount * 4;
+        !listCount && setListCount(currentListCount);
+        setMoviesListToShow(entireFilteredList.slice(0, currentListCount));
       } else {
         setMoviesListToShow(entireFilteredList);
         setIsBigAmount(false);
@@ -104,7 +108,9 @@ const Movies = ({ saved, onMovieLike }) => {
   };
 
   const onShowMore = () => {
-    const nextListCount = moviesListToShow.length + getColumnCount(moviesListRef.current) * 4;
+    const nextListCount = moviesListToShow.length + listCount;
+    setListCount(nextListCount);
+
     if (nextListCount >= moviesListByQuery.length) {
       setIsBigAmount(false);
     }

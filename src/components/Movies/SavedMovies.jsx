@@ -4,7 +4,6 @@ import SearchForm from './SearchForm/SearchForm';
 import MoviesCardList from './MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import Preloader from './Preloader/Preloader';
-import movieApi from '../../utils/MoviesApi';
 import getColumnCount from '../../utils/getColumnCount';
 import filterListByQuery from '../../utils/filterListByQuery';
 import { SavedMoviesContext } from '../../contexts/SavedMoviesContext';
@@ -25,25 +24,7 @@ const SavedMovies = ({ onMovieDelete }) => {
 
   const [moviesListByQuery, setMoviesListByQuery] = useState([]);
   const [moviesListToShow, setMoviesListToShow] = useState([]);
-
-  // useLayoutEffect(() => {
-  //   const getSavedMovies = () => {
-  //     mainApi
-  //       .getSavedMovies()
-  //       .then(({ data: savedMovies }) => {
-  //         console.log(savedMovies);
-  //         // const savedMoviesReorganized = savedMovies.map((oldData) => extractDataFromMovie(oldData));
-  //         setSavedMoviesList(savedMovies);
-  //       })
-  //       .then(() => {})
-  //       .catch((err) => {
-  //         setIsError(true);
-  //         console.log(`Ошибка.....: ${err}`);
-  //       });
-  //   };
-  //
-  //   getSavedMovies();
-  // }, []);
+  const [listCount, setListCount] = useState(0);
 
   const moviesListRef = useRef();
   function onCheckShortened() {
@@ -72,8 +53,11 @@ const SavedMovies = ({ onMovieDelete }) => {
       setMoviesListByQuery(entireFilteredList);
 
       if (entireFilteredList.length > currentColumnCount * 4) {
-        setIsBigAmount(true);
-        setMoviesListToShow(entireFilteredList.slice(0, currentColumnCount * 4));
+        entireFilteredList.length > listCount && setIsBigAmount(true);
+
+        const currentListCount = listCount || currentColumnCount * 4;
+        !listCount && setListCount(currentListCount);
+        setMoviesListToShow(entireFilteredList.slice(0, currentListCount));
       } else {
         setMoviesListToShow(entireFilteredList);
         setIsBigAmount(false);
@@ -116,47 +100,10 @@ const SavedMovies = ({ onMovieDelete }) => {
     setIsLoading(false);
   };
 
-  // ниже старое - переделать
-  // const getQuery = (query) => {
-  //   setIsEmpty(false);
-  //   setMovieQuery(query);
-  //   const currentColumnCount = getColumnCount(moviesListRef.current);
-  //
-  //   setIsLoading(true);
-  //
-  //   movieApi
-  //     .getMovies(query)
-  //     .then((movies) => {
-  //       const entireFilteredList = filterListByQuery(movies, query);
-  //
-  //       if (entireFilteredList.length === 0) {
-  //         setIsLoading(false);
-  //         setIsEmpty(true);
-  //         setMoviesListToShow([]);
-  //         setIsError(false);
-  //         return;
-  //       }
-  //
-  //       setMoviesListByQuery(entireFilteredList);
-  //
-  //       if (entireFilteredList.length > currentColumnCount * 4) {
-  //         setIsBigAmount(true);
-  //         setMoviesListToShow(entireFilteredList.slice(0, currentColumnCount * 4));
-  //       } else {
-  //         setMoviesListToShow(entireFilteredList);
-  //         setIsBigAmount(false);
-  //       }
-  //
-  //       setIsLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       setIsError(true);
-  //       console.log(`Ошибка.....: ${err}`);
-  //     });
-  // };
-
   const onShowMore = () => {
-    const nextListCount = moviesListToShow.length + getColumnCount(moviesListRef.current) * 4;
+    const nextListCount = moviesListToShow.length + listCount;
+    setListCount(nextListCount);
+
     if (nextListCount >= moviesListByQuery.length) {
       setIsBigAmount(false);
     }
@@ -176,7 +123,6 @@ const SavedMovies = ({ onMovieDelete }) => {
 
           <MoviesCardList
             onMovieDelete={onMovieDelete}
-            // movies={savedMoviesList}
             movies={moviesListToShow}
             ref={moviesListRef}
             saved

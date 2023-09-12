@@ -45,10 +45,7 @@ const Profile = ({ onUpdateUser, onSignOut }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (
-      // validate({ email: formValue.email, name: formValue.name })
-      profileValidate({ email: formValue.email, name: formValue.name }, currentUser)
-    ) {
+    if (profileValidate({ email: formValue.email, name: formValue.name }, currentUser)) {
       setSuccessfulValidated(true);
       onUpdateUser({ email: formValue.email, name: formValue.name }).then((res) =>
         !res ? setIsUpdateCompleted(false) : setIsUpdateCompleted(true),

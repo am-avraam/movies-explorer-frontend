@@ -29,7 +29,7 @@ class MainApi {
 
     return this._getResponseData(response);
   }
-  //
+
   patchUser = async (newInfo) => {
     const response = await fetch(this._baseUrl + '/users/me', {
       method: 'PATCH',
