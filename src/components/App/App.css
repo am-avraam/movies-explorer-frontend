@@ -1,0 +1,13 @@
+.App {
+  font-family: 'Inter', ‘Arial’, sans-serif;
+  text-align: center;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 1);
+  background-color: #202020;
+  height: 100vh;
+}
+
+.App:has(.menu_opened) {
+  height: 100vh;
+  overflow-y: hidden;
+}

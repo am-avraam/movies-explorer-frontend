@@ -1,0 +1,143 @@
+.movies__like {
+    all: unset;
+    width: 24px;
+    height: 24px;
+    background: url('../../../images/like.svg') no-repeat;
+    position: absolute;
+    top: -4px;
+    right: 0;
+    cursor: pointer;
+}
+
+.movies__remove {
+    text-decoration: none;
+    border: none;
+    width: 24px;
+    height: 24px;
+    background: url('../../../images/remove.svg') no-repeat;
+    position: absolute;
+    top: -4px;
+    right: 0;
+    cursor: pointer;
+}
+
+.movies__action {
+    right: 0;
+    top: 161px;
+}
+
+@media (max-width: 767px) {
+    .movies__action {
+        top: 178px;
+    }
+}
+
+@media (max-width: 1279px) {
+    .movies__action {
+        top: 200px;
+    }
+}
+
+.movies__like:hover, .movies__like:active {
+    opacity: .8;
+}
+
+.movies__remove:hover, .movies__remove:active {
+    opacity: .8;
+}
+
+.movies__like_state_active {
+    background: url('../../../images/activeLike.svg') no-repeat;
+
+}
+
+
+.movies__card {
+    position: relative;
+    width: 100%;
+}
+
+.movies__image {
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+}
+
+@media (max-width: 767px) {
+    .movies__image {
+        height: 168px;
+    }
+}
+
+@media (max-width: 1279px) {
+    .movies__image {
+        height: 190px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .movies__image {
+        height: 151px;
+    }
+}
+
+.movies__description {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 14px;
+}
+
+@media (max-width: 767px) {
+    .movies__description {
+        margin-top: 15px;
+    }
+}
+
+.movies__name {
+    font-weight: 500;
+    margin-top: 0;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: left;
+    display: inline;
+    margin-bottom: 29px;
+}
+
+@media (max-width: 767px) {
+    .movies__name {
+        font-size: 12px;
+        line-height: 15px;
+    }
+}
+
+.movies__duration::before {
+    content: '';
+    display: block;
+    margin-bottom: 6px;
+    height: 1px;
+    width: 100%;
+    background-color: #424242;
+}
+
+.movies__duration {
+    font-size: 11px;
+    line-height: 13px;
+    color: #8B8B8B;
+    text-align: left;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+@media (max-width: 767px) {
+    .movies__duration {
+        font-size: 10px;
+        line-height: 12px;
+    }
+}
+
+.movies__trailer {
+    text-decoration: none;
+    color: inherit;
+}
